@@ -1,0 +1,2192 @@
+DataTypes = [
+  {ru.sitrol.fgdp.TsWeekDay,{ts.Name="Производственный день",ts.Description="Производственный день (с использованием констант ТоксСофт)",ts.DefaultValue=@WeekDay{monday},ts.KeeperId="WeekDay",sk.AtomicType=@AtomicType{VALOBJ}}}
+]
+ClassInfos = [
+  { sk.System, SkObject, {ts.Name="Система",ts.Description="Система"},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = [
+      {LoginFailed,{ts.Name="Отказ доступа",ts.Description="Неудачная попытка подключения пользователя",sk.IsHist=true},[
+        {Login,{ts.Name="login",ts.Description="Логин пользователя",sk.TypeId="String"}},
+        {IP,{ts.Name="IP",ts.Description="IP-адрес пользователя",sk.TypeId="String"}}
+      ]},
+      {SysdescrChanged,{ts.Name="Измененено системное описание",ts.Description="Измененено системное описание",sk.IsHist=true},[
+        {user,{ts.Name="Пользователь",ts.Description="Пользователь системы (login)",sk.TypeId="String"}},
+        {description,{ts.Name="Пользователь",ts.Description="Описание изменений (вводится пользователем)",sk.TypeId="String"}},
+        {editor,{ts.Name="Редактор",ts.Description="Описание редактора",sk.TypeId="String"}}
+      ]}
+    ]
+  },
+  { sk.User, SkObject, {ts.Name="Пользователь",ts.Description="Пользователь системы"},
+    attrs = [
+      {password,{ts.Name="Пароль",ts.Description="Пароль пользователя",ts.DefaultValue="",sk.TypeId="ts.Password"}},
+      {isEnabled,{ts.Name="Доступ",ts.Description="Доступ к учетной записи пользователя",ts.DefaultValue=true,sk.TypeId="Boolean"}},
+      {isHidden,{ts.Name="Скрыто",ts.Description="Скрытная учетная запись",ts.DefaultValue=false,sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = [
+      {SessionCreated,{ts.Name="Создание сессии",ts.Description="Создана сессия пользователя",sk.IsHist=true},[
+        {SessionId,{ts.Name="sessionId",ts.Description="Идентификатор сессии пользователя",sk.TypeId="String"}},
+        {IP,{ts.Name="IP",ts.Description="IP-адрес пользователя",sk.TypeId="String"}}
+      ]},
+      {SessionClosed,{ts.Name="Завершение сессии",ts.Description="Завершение сессии пользователя",sk.IsHist=true},[
+        {SessionId,{ts.Name="sessionId",ts.Description="Идентификатор сессии пользователя",sk.TypeId="String"}},
+        {IP,{ts.Name="IP",ts.Description="IP-адрес пользователя",sk.TypeId="String"}}
+      ]},
+      {SessionBreaked,{ts.Name="Обрыв сессии",ts.Description="Обрыв сессии пользователя",sk.IsHist=true},[
+        {SessionId,{ts.Name="sessionId",ts.Description="Идентификатор сессии пользователя",sk.TypeId="String"}},
+        {IP,{ts.Name="IP",ts.Description="IP-адрес пользователя",sk.TypeId="String"}}
+      ]},
+      {SessionRestored,{ts.Name="Восстановление сессии",ts.Description="Восстановление сессии пользователя",sk.IsHist=true},[
+        {SessionId,{ts.Name="sessionId",ts.Description="Идентификатор сессии пользователя",sk.TypeId="String"}},
+        {IP,{ts.Name="IP",ts.Description="IP-адрес пользователя",sk.TypeId="String"}}
+      ]}
+    ]
+  },
+  { sk.Session, SkObject, {ts.Name="Сессия",ts.Description="Сессия пользователя системы"},
+    attrs = [
+      {StartTime,{ts.Name="Открыта",ts.Description="Метка времени (мсек с начала эпохи) открытия сессии",sk.TypeId="Timestamp"}},
+      {EndTime,{ts.Name="Закрыта",ts.Description="Метка времени (мсек с начала эпохи) завершения сессии",ts.DefaultValue=None,sk.TypeId="Timestamp"}},
+      {BackendSpecificParams,{ts.Name="Backend",ts.Description="Специфичные для бекенда параметры",sk.TypeId="VALOBJ"}},
+      {ConnectionCreationParams,{ts.Name="Connection",ts.Description="Параметры создания соединения",sk.TypeId="VALOBJ"}}
+    ],
+    rtdata = [
+      {State,{ts.Name="Соединение",ts.Description="Состояние соединения",sk.IsCurr=false,sk.IsHist=true,sk.IsSync=false,sk.SyncDeltaT=0,sk.TypeId="Boolean"}}
+    ],
+    links = [
+      {User,{ts.Name="Пользователь",ts.Description="Пользователь, который вошел в систему",sk.link.RightClassIds=@StringList{{sk.User}},sk.link.LinkConstraint=@CollConstraint{1,0x7}}}
+    ],
+    cmds = [],
+    events = [
+      {StateChanged,{ts.Name="Изменилось состояния сессии",ts.Description="Изменилось состояние сессии (состояние сединения)",sk.IsHist=true},[
+        {NewState,{ts.Name="Состояние",ts.Description="Новое состояние соединения",sk.TypeId="VALOBJ"}}
+      ]}
+    ]
+  },
+  { sk.regref.Section, SkObject, {sk.classIsCodeDefined=true},
+    attrs = [
+      {Params,{ts.Name="Параметры",ts.Description="Параметры",sk.TypeId="ts.OptionSet"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = [
+      {RriParamsChange,{ts.Name="Правка НСИ",ts.Description="Событие редактирования значения параметра НСИ",sk.IsHist=true},[
+        {sectionId,{ts.Name="Раздел",ts.Description="Идентификатор раздела НСИ",sk.TypeId="ts.IDpath"}},
+        {paramGwid,{ts.Name="Параметр",ts.Description="Идентификатор параметра НСИ",sk.TypeId="VALOBJ"}},
+        {authorLogin,{ts.Name="Автор",ts.Description="Автор (точнее, логин, имя входа) изменения параметров НСИ",sk.TypeId="String"}},
+        {isLink,{ts.Name="Связь?",ts.Description="Признак, что параметр НСИ связь, а не атрибут объекта",sk.TypeId="ts.TsBool"}},
+        {reason,{ts.Name="Причина",ts.Description="Причина изменения параметров НСИ",sk.TypeId="ts.IDpath"}},
+        {oldAttr,{ts.Name="Предыдущее",ts.Description="Предыдущее значение параметра НСИ",sk.TypeId="None"}},
+        {newAttr,{ts.Name="Новое",ts.Description="Новое значение параметра НСИ",sk.TypeId="None"}},
+        {oldLink,{ts.Name="Предыдущее",ts.Description="Предыдущее значение параметра НСИ",sk.TypeId="VALOBJ"}},
+        {newLink,{ts.Name="Новое",ts.Description="Новое значение параметра НСИ",sk.TypeId="VALOBJ"}}
+      ]}
+    ]
+  },
+  { sk.refbook.class.refbook, SkObject, {sk.classIsCodeDefined=true},
+    attrs = [
+      {ItemClassId,{ts.Name="Класс элемента",ts.Description="Идентификатор описательного класса элементов справочника",sk.TypeId="ts.IDpath"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = [
+      {RefbookItemChange,{ts.Name="RB item",ts.Description="Refbook item changed"},[
+        {crudOp,{ts.Name="CRUD operation",ts.Description="What happened with item: CREATE, CHANGE, REMOVE",ts.KeeperId="OptionSet",ts.DefaultValue=None,sk.TypeId="VALOBJ"}},
+        {itemSkid,{ts.Name="Item SKID",ts.Description="SKID of the affected item",ts.KeeperId="OptionSet",ts.DefaultValue=None,sk.TypeId="VALOBJ"}},
+        {oldAttrs,{ts.Name="Old attrs",ts.Description="",ts.KeeperId="OptionSet",ts.DefaultValue=None,sk.TypeId="VALOBJ"}},
+        {newAttrs,{ts.Name="New attrs",ts.Description="",ts.KeeperId="OptionSet",ts.DefaultValue=None,sk.TypeId="VALOBJ"}},
+        {oldLinks,{ts.Name="Old links",ts.Description="",ts.KeeperId="SkLinksMap",ts.DefaultValue=None,sk.TypeId="VALOBJ"}},
+        {newLinks,{ts.Name="New links",ts.Description="",ts.KeeperId="SkLinksMap",ts.DefaultValue=None,sk.TypeId="VALOBJ"}}
+      ]}
+    ]
+  },
+  { fgdp.BlankConfiguration, SkObject, {},
+    attrs = [
+      {idsList,{sk.TypeId="String"}},
+      {startTime,{sk.TypeId="Integer"}},
+      {endTime,{sk.TypeId="Integer"}},
+      {pixPerSecond,{sk.TypeId="Float"}},
+      {useFirstPath,{sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [
+      {blankBand,{sk.link.RightClassIds=@StringList{{fgdp.blank.BandInfo}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { fgdp.IntervalPairing, SkObject, {ts.Name="",ts.Description=""},
+    attrs = [
+      {startTime,{sk.TypeId="Integer",ts.Name="",ts.Description=""}},
+      {endTime,{sk.TypeId="Integer",ts.Name="",ts.Description=""}},
+      {pairing,{sk.TypeId="Float",ts.Name="",ts.Description=""}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.MementoHolder, SkObject, {},
+    attrs = [
+      {memento,{sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.TedConfiguration, SkObject, {},
+    attrs = [
+      {autoUpdateFirstTrains,{sk.TypeId="Boolean"}},
+      {todDecoratorsMemento,{sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.TrainScheduleBlank, SkObject, {ts.Name="",ts.Description=""},
+    attrs = [
+      {rowHeight,{sk.TypeId="Integer",ts.Name="Высота строки",ts.Description="Высота строки в поездном расписании"}}
+    ],
+    rtdata = [],
+    links = [
+      {stations,{ts.Name="Cтанции",ts.Description="Список станций бланка поездного расписания",sk.link.RightClassIds=@StringList{{metro.PassengerStation}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { fgdp.UserPairings, SkObject, {ts.Name="",ts.Description=""},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {intervalPairing1,{sk.link.RightClassIds=@StringList{{fgdp.IntervalPairing}},sk.link.LinkConstraint=@CollConstraint{0,0x2},ts.Name="",ts.Description=""}},
+      {intervalPairing2,{sk.link.RightClassIds=@StringList{{fgdp.IntervalPairing}},sk.link.LinkConstraint=@CollConstraint{0,0x2},ts.Name="",ts.Description=""}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.DepoTrainType, SkObject, {ts.Name="Депо-тип поезда",ts.Description="Описание привязки депо-тип поезда"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {trainType,{ts.Name="Тип поезда",ts.Description="тип поезда",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TrainTypeRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {depot,{ts.Name="Депо",ts.Description="депо",sk.link.RightClassIds=@StringList{{metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.DepotConstraints, SkObject, {ts.Name="Ограничения депо",ts.Description="Ограничения депо"},
+    attrs = [
+      {sleepIn,{sk.TypeId="Integer",ts.Name="Поезда ночующие в депо",ts.Description="Количество поездов ночующих в депо"}},
+      {sleepOut,{sk.TypeId="Integer",ts.Name="Поезда ночующие на линии",ts.Description="Количество поездов ночующих на линии"}},
+      {dayDitches,{sk.TypeId="Integer",ts.Name="Количество рабочих канав днем",ts.Description="Количество рабочих канав днем"}}
+    ],
+    rtdata = [],
+    links = [
+      {routes,{ts.Name="Ограничения маршрутов",ts.Description="Ограничения маршрутов",sk.link.RightClassIds=@StringList{{metro.RouteConstraints}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {depot,{ts.Name="Депо",ts.Description="Депо",sk.link.RightClassIds=@StringList{{metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.DrivingMode, SkObject, {ts.Name="Режим хода",ts.Description="Режим хода"},
+    attrs = [
+      {additional,{sk.TypeId="Boolean",ts.Name="Дополнительный",ts.Description="Признак дополнительного режима хода"}}
+    ],
+    rtdata = [],
+    links = [
+      {stages,{ts.Name="Перегоны",ts.Description="Перегоны",sk.link.RightClassIds=@StringList{{metro.StageMode,metro.StageModeFirst}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {stops,{ts.Name="Стоянки",ts.Description="Стоянки",sk.link.RightClassIds=@StringList{{metro.StopMode}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Line, SkObject, {ts.Name="Линия",ts.Description="Линия метрополитена"},
+    attrs = [
+      {number,{sk.TypeId="String",ts.Name="номер",ts.DefaultValue="0",ts.Description="Номер линии"}},
+      {counter,{sk.TypeId="Integer",ts.Name="счетчик графиков",ts.DefaultValue=0,ts.Description="Счетчик графиков в статусе 'готовый'"}}
+    ],
+    rtdata = [],
+    links = [
+      {regions,{ts.Name="Участки",ts.Description="Участки линии",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {depots,{ts.Name="Депо",ts.Description="Депо",sk.link.RightClassIds=@StringList{{metro.Depot}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {neighbours,{ts.Name="Связанные линии",ts.Description="Линии с которыми есть связь через соединительные ветви",sk.link.RightClassIds=@StringList{{metro.Line}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.Depot,metro.PassengerStation,metro.RailwayStage,metro.ConnectionBranch,metro.DrivingMode}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {pathways,{ts.Name="Топологические пути",ts.Description="Топологические пути на данной линии",sk.link.RightClassIds=@StringList{{metro.Pathway,metro.TransitPath}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {trafficTables,{ts.Name="Таблицы размеров движения.",ts.Description="Таблицы размеров движения для данной линии.",sk.link.RightClassIds=@StringList{{metro.TrafficTable}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.LineDrivingModes, SkObject, {ts.Name="Таблица режимов хода",ts.Description="Таблица всех режимов хода для линии по 1 и 2 пути"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {path1,{ts.Name="Режимы хода по 1 пути",ts.Description="Режимы хода по 1 пути",sk.link.RightClassIds=@StringList{{metro.DrivingMode}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {path2,{ts.Name="Режимы хода по 2 пути",ts.Description="Режимы хода по 2 пути",sk.link.RightClassIds=@StringList{{metro.DrivingMode}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.LineRegion, SkObject, {ts.Name="Участок",ts.Description="Участок линии"},
+    attrs = [
+      {circle,{sk.TypeId="Boolean",ts.Name="Признак кольцевой",ts.Description="Признак кольцевой линии"}}
+    ],
+    rtdata = [],
+    links = [
+      {changeStation1path,{ts.Name="Станция смены номера поезда по 1-му пути",ts.Description="Станция смены номера поезда по 1-му пути для кольцевой линии",sk.link.RightClassIds=@StringList{{metro.PassengerStation}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {changeStation2path,{ts.Name="Станция смены номера поезда по 2-му пути",ts.Description="Станция смены номера поезда по 2-му пути для кольцевой линии",sk.link.RightClassIds=@StringList{{metro.PassengerStation}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {stations,{ts.Name="Cтанции",ts.Description="Cтанции",sk.link.RightClassIds=@StringList{{metro.PassengerStation}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {drivingModes,{ts.Name="Таблица режимов хода",ts.Description="Таблица режимов хода",sk.link.RightClassIds=@StringList{{metro.LineDrivingModes}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.NightDowntime, SkObject, {ts.Name="Ночной отстой",ts.Description="Ночной отстой в депо или на ночной расстановке"},
+    attrs = [
+      {start,{sk.TypeId="Integer",ts.Name="Начало",ts.Description="Время суток начала ночного отстой"}},
+      {end,{sk.TypeId="Integer",ts.Name="Окончание",ts.Description="Время суток окончания ночного отстоя"}},
+      {even,{sk.TypeId="Boolean",ts.Name="чет",ts.Description="Ночной отстой в четный день"}},
+      {odd,{sk.TypeId="Boolean",ts.Name="нечет",ts.Description="Ночной отстой в нечетный день"}}
+    ],
+    rtdata = [],
+    links = [
+      {parking,{ts.Name="Место отстоя",ts.Description="Место ночного отстоя",sk.link.RightClassIds=@StringList{{metro.Place}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {next,{ts.Name="Следующий маршрут",ts.Description="Следующий маршрут",sk.link.RightClassIds=@StringList{{metro.TrainRoute}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.NightParking, SkObject, {ts.Name="Ночная расстановка",ts.Description="Меcто ночной расстановки на линии"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {station,{ts.Name="Станция",ts.Description="Станция привязки ночной расстановки",sk.link.LinkConstraint=@CollConstraint{1,0x5},sk.link.RightClassIds=@StringList{{metro.PassengerStation}}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.ParkingSpot}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.PassengerStation, SkObject, {ts.Name="Станция",ts.Description="Пассажирская станция"},
+    attrs = [
+      {number,{sk.TypeId="Integer",ts.Name="Номер станции",ts.Description="Номер станции в порядке следования по 1 пути"}},
+      {ramified,{sk.TypeId="Boolean",ts.Name="Путевое развитие",ts.Description="Признак станции с путевым развитием"}}
+    ],
+    rtdata = [],
+    links = [
+      {platforms,{ts.Name="Гл.ст.пути станции",ts.Description="Главные станционные пути станции",sk.link.RightClassIds=@StringList{{metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {paths,{ts.Name="Ст.пути станции",ts.Description="Станционные пути станции",sk.link.RightClassIds=@StringList{{metro.StationPath}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {routes,{ts.Name="Станционные маршруты",ts.Description="Станционные маршруты",sk.link.RightClassIds=@StringList{{metro.StationRoute}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationRoute,metro.NightParking}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Pathway, SkObject, {ts.Name="Топологический путь",ts.Description="Топологический путь между двумя точками"},
+    attrs = [
+      {order,{sk.TypeId="String",ts.Name="очередь",ts.DefaultValue="0",ts.Description="Номер в очереди для расстановки — общий для ЧЕТ и НЕЧЕТ"}},
+      {orderODD,{sk.TypeId="String",ts.Name="очередь НЕЧЕТ",ts.Description="Номер в очереди в/на расстановку НЕЧЕТ"}},
+      {orderEVEN,{sk.TypeId="String",ts.Name="очередь ЧЕТ",ts.Description="Номер в очереди в/на расстановку ЧЕТ"}}
+    ],
+    rtdata = [],
+    links = [
+      {ways,{ts.Name="Участки пути",ts.Description="Набор участков, составляющих топологический путь",sk.link.RightClassIds=@StringList{{metro.Way}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {start,{ts.Name="Начало",ts.Description="Начало топологического пути",sk.link.RightClassIds=@StringList{{metro.Place}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Place, SkObject, {ts.Name="Базовый класс место",ts.Description="Любое место топологии, где поезд стоит"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {busy,{ts.Name="Интервалы занятости",ts.Description="Интервалы времени, когда данное место занято поездом",sk.link.RightClassIds=@StringList{{metro.TimeInterval}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.PlannedTrafficSchedule, SkObject, {ts.Name="График движения поездов",ts.Description="График планового движения"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {routes,{ts.Name="Маршруты",ts.Description="Маршруты",sk.link.RightClassIds=@StringList{{metro.TrainRoute}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {lines,{ts.Name="Линии",ts.Description="Линии метрополитена включенные в данный график",sk.link.RightClassIds=@StringList{{metro.Line}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {trafficTable,{ts.Name="Таблица размеров движения",ts.Description="Таблица размеров движения и загрузки перегонов",sk.link.RightClassIds=@StringList{{metro.TrafficTable}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.TrainService,metro.DepotConstraints,metro.Line}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.RailwayStage, SkObject, {ts.Name="Перегон",ts.Description="Перегон между пассажирскими станциями"},
+    attrs = [
+      {pathNum,{sk.TypeId="Integer",ts.Name="Номер гл.пути",ts.Description="Номер главного пути"}},
+      {shortName,{sk.TypeId="String",ts.Name="Короткое имя",ts.Description="Короткое имя перегона"}}
+    ],
+    rtdata = [],
+    links = [
+      {to,{ts.Name="Конец",ts.Description="Гл.ст.путь, на котором заканчивается перегон",sk.link.RightClassIds=@StringList{{metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {from,{ts.Name="Начало",ts.Description="Гл.ст.путь, с которого начинается перегони",sk.link.RightClassIds=@StringList{{metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.StageMode,metro.StageModeFirst}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.RouteConstraints, SkObject, {ts.Name="Ограничения маршрута",ts.Description="Ограничения маршрута"},
+    attrs = [
+      {route,{sk.TypeId="String",ts.Name="Номер маршрута",ts.Description="Номер маршрута поезда"}},
+      {nextRoute,{sk.TypeId="String",ts.Name="Cледующий маршрут",ts.Description="Номер следующего маршрута поезда"}},
+      {to2,{sk.TypeId="Boolean",ts.Name="ТО-2",ts.Description="ТО-2"}},
+      {to3,{sk.TypeId="Boolean",ts.Name="ТО-3",ts.Description="ТО-3"}},
+      {fromDepot,{sk.TypeId="Boolean",ts.Name="Из Депо",ts.Description="Из Депо"}},
+      {toDepotMorning,{sk.TypeId="Boolean",ts.Name="После утреннего пика съем в депо",ts.Description="После утреннего пика съем в депо"}},
+      {runIn,{sk.TypeId="Boolean",ts.Name="Обкатка",ts.Description="Обкатка"}},
+      {stayOff,{sk.TypeId="Boolean",ts.Name="Не выходит",ts.Description="Не выходит"}},
+      {morningOutNotEarlier,{sk.TypeId="Integer",ts.Name="Утренний выход, не ранее",ts.Description="Утренний выход, не ранее"}},
+      {morningOutNotLater,{sk.TypeId="Integer",ts.Name="Утренний выход, не позже",ts.Description="Утренний выход, не позже"}},
+      {morningInNotEarlier,{sk.TypeId="Integer",ts.Name="Утренний съем, не ранее",ts.Description="Утренний съем, не ранее"}},
+      {morningInNotLater,{sk.TypeId="Integer",ts.Name="Утренний съем, не позже",ts.Description="Утренний съем, не позже"}},
+      {eveningOutNotEarlier,{sk.TypeId="Integer",ts.Name="Вечерний выход, не ранее",ts.Description="Вечерний выход, не ранее"}},
+      {eveningOutNotLater,{sk.TypeId="Integer",ts.Name=" Вечерний выход, не позже",ts.Description=" Вечерний выход, не позже"}},
+      {eveningInNotEarlier,{sk.TypeId="Integer",ts.Name=" Вечерний съем, не ранее",ts.Description=" Вечерний съем, не ранее"}},
+      {evenningInNotLater,{sk.TypeId="Integer",ts.Name=" Вечерний съем, не позже",ts.Description=" Вечерний съем, не позже"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.S5DocumentBase, SkObject, {ts.Name="Базовый класс документов",ts.Description="Базовый класс для всех документов."},
+    attrs = [
+      {blobId,{sk.TypeId="VALOBJ",ts.Name="идентификатор блока данных документа",ts.Description=""}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.S5DocumentGDP, metro.S5DocumentBase, {ts.Name="Документ ГДП",ts.Description="Документ графика планового движения поездов"},
+    attrs = [
+      {vdNumber,{sk.TypeId="Integer",ts.Name="Визуальный идентификатор",ts.Description="Визуальный идентификатор графика",ts.DefaultValue=0}},
+      {gdpStatus,{sk.TypeId="VALOBJ",ts.Name="Статус",ts.Description="Статус разработки"}},
+      {noChat,{sk.TypeId="Boolean",ts.Name="Запрет на чат",ts.Description="Запрет на ввод текстовых сообщений"}},
+      {from,{sk.TypeId="Timestamp",ts.Name="Дата начала",ts.Description="Дата начала использования"}},
+      {to,{sk.TypeId="Timestamp",ts.Name="Дата использования",ts.Description="Дата окончания использования"}},
+      {summer,{sk.TypeId="Boolean",ts.Name="Зима/лето",ts.Description="Зима/лето"}},
+      {weekend,{sk.TypeId="Boolean",ts.Name="Выходные/будни",ts.Description="Выходные/будни"}},
+      {special,{sk.TypeId="Boolean",ts.Name="Специальный",ts.Description="Специальный"}},
+      {doc,{sk.TypeId="String",ts.Name="Название распоряжения",ts.Description="Название распоряжения, на основании которого вводится график"}},
+      {hidden,{sk.TypeId="Boolean",ts.Name="Запрет на просмотр",ts.Description="Запрет на просмотр ГДП"}},
+      {createdTime,{sk.TypeId="Timestamp",ts.Name="Дата создания",ts.Description="Дата создания документа"}},
+      {editedTime,{sk.TypeId="Timestamp",ts.Name="Дата редактирования",ts.Description="Дата последнего редактирования"}},
+      {startTimeDepot,{sk.TypeId="Integer",ts.Name="Время начала движения из депо",ts.Description="Время начала движения из депо"}},
+      {startTimeParking,{sk.TypeId="Integer",ts.Name="Время начала движения c парковки",ts.Description="Время начала движения с ночной парковки"}},
+      {endTimeSubway,{sk.TypeId="Integer",ts.Name="Время окончания движения",ts.Description="Время окончания движения"}},
+      {endTime4Passengers,{sk.TypeId="Integer",ts.Name="Время последнего полного пассажирского поезда",ts.Description="Время последнего полного пассажирского поезда"}},
+      {description,{sk.TypeId="String",ts.Name="Описание",ts.Description="Описание документа"}}
+    ],
+    rtdata = [],
+    links = [
+      {lines,{ts.Name="Линии для которых делается этот набор ГДП/ГО",ts.Description="Линии для которых делается этот набор ГДП/ГО.",sk.link.RightClassIds=@StringList{{metro.Line}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {author,{ts.Name="Автор ГДП",ts.Description="Пользователь системы создавший ГДП.",sk.link.RightClassIds=@StringList{{sk.User}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {currEditor,{ts.Name="Автор последних изменений",ts.Description="Автор последних изменений.",sk.link.RightClassIds=@StringList{{sk.User}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.S5DocumentGO, metro.S5DocumentBase, {ts.Name="Документ одного ГО",ts.Description="Документ содержащий все данные одного графика оборота (ГО)"},
+    attrs = [
+      {weekend,{sk.TypeId="Boolean",ts.Name="Выходные/будни",ts.Description=""}}
+    ],
+    rtdata = [],
+    links = [
+      {line,{ts.Name="Линия ГО",ts.Description="Линия для которой сформирован график оборота(ГО).",sk.link.RightClassIds=@StringList{{metro.Line}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {depot,{ts.Name="Депо ГО",ts.Description="Депо для которого сформирован график оборота(ГО).",sk.link.RightClassIds=@StringList{{metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {trainType,{ts.Name="Тип поезда",ts.Description="Тип поездов облуживаемый депо(ГО).",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TrainTypeRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.ServicePoint, SkObject, {ts.Name="ПТО",ts.Description="Пункт ТО на линии"},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.StageMode, SkObject, {ts.Name="Ход по перегону",ts.Description="Ход по перегону"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {stage,{ts.Name="Перегон",ts.Description="Перегон",sk.link.RightClassIds=@StringList{{metro.RailwayStage}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.StageModeFirst, SkObject, {ts.Name="Ход по перегону 1 поезд",ts.Description="Ход по перегону в режиме первого поезда"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {stage,{ts.Name="Перегон",ts.Description="Перегон",sk.link.RightClassIds=@StringList{{metro.RailwayStage}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.StagePairing, SkObject, {ts.Name="Размер движения",ts.Description="Размер движения для перегона"},
+    attrs = [
+      {load,{sk.TypeId="Integer",ts.Name="Загрузка перегона",ts.Description="Количество пассажиров в интервал времени через перегон"}}
+    ],
+    rtdata = [],
+    links = [
+      {stage,{ts.Name="Перегон",ts.Description="Перегон",sk.link.RightClassIds=@StringList{{metro.RailwayStage}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {interval,{ts.Name="Интервал времени",ts.Description="Интервал времени суток",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.IntervalRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.StationPath, metro.Place, {ts.Name="Ст.путь",ts.Description="Станционный путь"},
+    attrs = [
+      {pathNum,{sk.TypeId="Integer",ts.Name="Номер cт.пути",ts.Description="Номер cтанционного пути"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.StopMode, SkObject, {ts.Name="Стоянка",ts.Description="Стоянка на станции"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {station,{ts.Name="Гл.ст.путь",ts.Description="Главный станционный путь",sk.link.RightClassIds=@StringList{{metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TimeInterval, SkObject, {ts.Name="Интервал времени",ts.Description="Интервал времени"},
+    attrs = [
+      {start,{sk.TypeId="Integer",ts.Name="Начало",ts.Description="Начало интервала в секундах от начала суток"}},
+      {duration,{sk.TypeId="Integer",ts.Name="Длительность",ts.Description="Длительность интервала в секундах"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.TrafficTable, SkObject, {ts.Name="Таблица размеров движения",ts.Description="Таблица размеров движения и загрузки перегонов"},
+    attrs = [
+      {importDate,{sk.TypeId="String",ts.Name="Дата импорта",ts.Description="Дата импорта файла СИППа"}},
+      {importAuthor,{sk.TypeId="String",ts.Name="Автор",ts.Description="Пользователь который выполнил импорт файла СИПП"}},
+      {plan,{sk.TypeId="Boolean",ts.Name="план ✔/факт -",ts.Description="план/факт"}},
+      {sourceFile,{sk.TypeId="String",ts.Name="Полный путь к файлу",ts.Description="Полный путь к файлу импорта из СИПП"}}
+    ],
+    rtdata = [],
+    links = [
+      {pairings,{ts.Name="Размеры движения",ts.Description="Размеры движения для перегонов по интервалам времени",sk.link.RightClassIds=@StringList{{metro.StagePairing}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TrainRoute, SkObject, {ts.Name="Маршрут",ts.Description="Маршрут поезда"},
+    attrs = [
+      {number,{sk.TypeId="String",ts.Name="Номер маршрута",ts.Description="Номер маршрута"}}
+    ],
+    rtdata = [],
+    links = [
+      {routeItems,{ts.Name="Элементы маршрута",ts.Description="Элементы маршрута",sk.link.RightClassIds=@StringList{{metro.TrainRouteItem}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {services,{ts.Name="ТО",ts.Description="Техническое обслуживание на маршруте",sk.link.RightClassIds=@StringList{{metro.TrainService}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {next,{ts.Name="Следующий маршрут",ts.Description="Следующий маршрут",sk.link.RightClassIds=@StringList{{metro.TrainRoute}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TrainRouteItem, SkObject, {ts.Name="Элемент маршрута",ts.Description="Базовый класс всех составляющих маршрута"},
+    attrs = [
+      {start,{sk.TypeId="Integer",ts.Name="Начало",ts.Description="Время суток начала"}},
+      {end,{sk.TypeId="Integer",ts.Name="Окончание",ts.Description="Время суток окончания"}},
+      {description,{sk.TypeId="String",ts.Name="Описание",ts.Description="Дополнительный комментарий"}},
+      {even,{sk.TypeId="Boolean",ts.Name="чет",ts.Description="В четный день"}},
+      {odd,{sk.TypeId="Boolean",ts.Name="нечет",ts.Description="В нечетный день"}},
+      {evenNumber,{sk.TypeId="Integer",ts.Name="Номер чет",ts.Description="Номер элемента маршрута для четной расстановки"}},
+      {oddNumber,{sk.TypeId="Integer",ts.Name="Номер нечет",ts.Description="Номер элемента маршрута для нечетной расстановки"}},
+      {evenBis,{sk.TypeId="Boolean",ts.Name="Бис чет",ts.Description="Признак дополнительной нитки для четной расстановки"}},
+      {oddBis,{sk.TypeId="Boolean",ts.Name="Бис нечет",ts.Description="Признак дополнительной нитки для нечетной расстановки"}}
+    ],
+    rtdata = [],
+    links = [
+      {next,{ts.Name="Следующий элемент маршрута",ts.Description="Следующий элемент маршрута",sk.link.RightClassIds=@StringList{{metro.TrainRouteItem}},sk.link.LinkConstraint=@CollConstraint{2,0x0}}},
+      {color,{ts.Name="Цвет",ts.Description="Вручную назначенный цвет данному элементу маршрута",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.ColorRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {type,{ts.Name="Тип поезда",ts.Description="Тип поезда",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.ThreadTypesRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TrainSchedule, SkObject, {ts.Name="График",ts.Description="График движения поезда"},
+    attrs = [
+      {startTime,{sk.TypeId="Integer",ts.Name="Время начала",ts.Description="Время начала прохождения (в секундах с начала суток)"}},
+      {endTime,{sk.TypeId="Integer",ts.Name="Время окончания",ts.Description="Время окончания прохождения (в секундах с начала суток)"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.TrainService, SkObject, {ts.Name="ТО состава",ts.Description="Техобслуживание состава"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {type,{ts.Name="Тип ТО",ts.Description="Тип ТО",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.WagonServiceRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {item,{ts.Name="Элемент ТО",ts.Description="Элемент маршрута, к которому привязывается ТО",sk.link.RightClassIds=@StringList{{metro.NightDowntime,metro.DayDowntime,metro.Turnover}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Transit, metro.TrainRouteItem, {ts.Name="Переезд между линиями",ts.Description="Переезд поезда с одной линии на другую"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path,{ts.Name="Траектория переезда",ts.Description="Траектория переезда",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TransitPath, metro.Pathway, {ts.Name="Схема соединения",ts.Description="Схема соединения двух линий"},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.Turnover, metro.TrainRouteItem, {ts.Name="Оборот",ts.Description="Оборот"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {turnoverPath,{ts.Name="Схема оборота",ts.Description="Схема оборота",sk.link.RightClassIds=@StringList{{metro.TurnoverPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {turnoverType,{ts.Name="Тип",ts.Description="Тип оборота",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TurnoverTypesRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TurnoverPath, metro.Pathway, {ts.Name="Схема оборота",ts.Description="Схема оборота"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {from,{ts.Name="Начало",ts.Description="Гл.ст.путь, с которого начинается оборот",sk.link.RightClassIds=@StringList{{metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {through,{ts.Name="Смена головы",ts.Description="Гл.ст.путь или Ст.путь, на котором меняется направление движения",sk.link.RightClassIds=@StringList{{metro.StationPath,metro.MainStationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.TurnoverSchedule, SkObject, {ts.Name="График оборота составов",ts.Description="График оборота составов"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {routes,{ts.Name="Маршруты",ts.Description="Маршруты",sk.link.RightClassIds=@StringList{{metro.TrainRoute}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {depoTrainType,{ts.Name="Депо-поезд",ts.Description="Тип поезда для данной линии",sk.link.RightClassIds=@StringList{{metro.DepoTrainType}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.DepotConstraints}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {depotConstraints,{ts.Name="Ограничения депо",ts.Description="Перечень ограничений депо для графика",sk.link.RightClassIds=@StringList{{metro.DepotConstraints}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Wagon, SkObject, {ts.Name="Вагон",ts.Description="Вагон метро. Может быть локомотивом, пассажирским или тем и другим."},
+    attrs = [
+      {number,{sk.TypeId="String",ts.Name="Номер",ts.Description="Номер вагона. В общем случае может представлять серию и номер вагона"}},
+      {locomotive,{sk.TypeId="Boolean",ts.Name="Локомотив",ts.Description="Признак того, что вагон может быть использован в качестве локомотива"}},
+      {passenger,{sk.TypeId="Boolean",ts.Name="Пассажирский",ts.Description="Признак того, что вагон может быть использован для перевозки пассажиров"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.Way, SkObject, {ts.Name="Базовый класс траектория",ts.Description="Путь между двумя топологическими точками"},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { ru.sitrol.fgdp.IndustrialDay, SkObject, {ts.Name="",ts.Description=""},
+    attrs = [
+      {date,{ts.Name="Дата",ts.Description="Дата",ts.valed.EditorFactoryName="ts.valed.ValedAvLocalDate",sk.TypeId="ts.Date"}},
+      {weekDay,{ts.Name="Производственный день",ts.Description="Переназначенный день недели действующий по производственному календарю",sk.TypeId="ru.sitrol.fgdp.TsWeekDay"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sitrol.Chat, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {Posts,{sk.link.LinkConstraint=@CollConstraint{0,0x0},ts.Name="Сообщения",ts.Description="Все сообщения в беседе (чате)",sk.link.RightClassIds=@StringList{{SkObject}}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sitrol.ChatPost, SkObject, {},
+    attrs = [
+      {PostText,{ts.Name="Сообщение",ts.Description="Текст сообщения",sk.TypeId="String"}},
+      {PostTime,{ts.Name="Время",ts.Description="Время публикации сообщения",sk.TypeId="Timestamp"}},
+      {AuthorLogin,{ts.Name="Автор",ts.Description="Автор сообщения",sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { ts.fgdp.DayAssign, SkObject, {ts.Name="Назначение дня",ts.Description="День года с назначенным ГДП (точнее, с назначением регулярного/специального ГДП) и вычисленным итоговым ГДП"},
+    attrs = [
+      {dayOfYear,{sk.TypeId="Integer",ts.Name="День года",ts.Description="День года в пределах 1..366"}}
+    ],
+    rtdata = [],
+    links = [
+      {gdpOfDay,{ts.Name="ГДП",ts.Description="ГДП, назначенный на этот день. Если есть, то назначается специальный ГДП (связь gdpSpecial), если нет специального, то регулярный ГДП (связь gdpRegular)",sk.link.RightClassIds=@StringList{{metro.S5DocumentGDP}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {gdpSpecial,{ts.Name="Специальный ГДП",ts.Description="Здесь задается специальный ГДП, если он задан для этого дня",sk.link.RightClassIds=@StringList{{metro.S5DocumentGDP}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {gdpRegular,{ts.Name="Регулярный ГДП",ts.Description="Большинству дней назначен тот или иной регулярный ГДП, надо которым приоритет имеет специальный ГДП",sk.link.RightClassIds=@StringList{{metro.S5DocumentGDP}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { ts.fgdp.GdpCalendarRule, SkObject, {ts.Name="Правило календаря",ts.Description="Правила, по которому назначентся ГДП в календаре"},
+    attrs = [
+      {rule_regular,{sk.TypeId="VALOBJ",ts.Name="Регулярное правило",ts.Description="Правило назначения ГДП, как регулярного графика"}},
+      {rule_special,{sk.TypeId="VALOBJ",ts.Name="Специальное правило",ts.Description="Правило назначения ГДП, как специального графика"}}
+    ],
+    rtdata = [],
+    links = [
+      {gdp,{ts.Name="ГДП",ts.Description="ГДП, для которого определяется правило",sk.link.RightClassIds=@StringList{{metro.S5DocumentGDP}},sk.link.LinkConstraint=@CollConstraint{1,0x1}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { ts.fgdp.GdpCalendarRules, SkObject, {ts.Name="",ts.Description=""},
+    attrs = [
+      {rule_regular,{ts.Name="Регулярное",ts.Description="Регулярное",ts.KeeperId="fgdp.RuleRegular",ts.DefaultValue=@fgdp.RuleRegular{},sk.TypeId="VALOBJ"}},
+      {rule_special,{ts.Name="Специальное",ts.Description="Специальное",ts.KeeperId="fgdp.RuleSpecial",ts.DefaultValue=@fgdp.RuleSpecial{},sk.TypeId="VALOBJ"}}
+    ],
+    rtdata = [],
+    links = [
+      {gdp,{ts.Name="ГДП",ts.Description="Идентификатор ГДП, для которого определены правила назначения",sk.link.LinkConstraint=@CollConstraint{1,0x3},sk.link.RightClassIds=@StringList{{metro.S5DocumentGDP}}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { ts.fgdp.IndustrialDay, SkObject, {ts.Name="Производственный день",ts.Description="Наличие объекта этого класса охначает, что на данную дату (атрибут date) днем недели в Московском метро считается уазанный день недели (атрибут weekDay). \nПодразумевается, что существует enum EWeekDay по семи дням недели."},
+    attrs = [
+      {weekDay,{sk.TypeId="VALOBJ",ts.Name="День недели",ts.Description="Назначенный на это день день недели"}},
+      {year,{sk.TypeId="Integer",ts.Name="Год",ts.Description="Год"}},
+      {dayOfYear,{sk.TypeId="Integer",ts.Name="День года",ts.Description="День года в пределах 1..366"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { ts.fgdp.YearPlan, SkObject, {ts.Name="Годовой план",ts.Description="План назначений ГДП по дням года"},
+    attrs = [
+      {year,{sk.TypeId="Integer",ts.Name="Год",ts.Description="Год"}}
+    ],
+    rtdata = [],
+    links = [
+      {dayAssigns,{ts.Name="Назначения",ts.Description="Назначение ГДП по дням",sk.link.RightClassIds=@StringList{{ts.fgdp.DayAssign}},sk.link.LinkConstraint=@CollConstraint{366,0x0}}},
+      {line,{ts.Name="Линия метро",ts.Description="Линия метро, к которому относится этот годовой план",sk.link.RightClassIds=@StringList{{SkObject}},sk.link.LinkConstraint=@CollConstraint{1,0x1}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.ChangeHead, metro.TrainRouteItem, {ts.Name="Смена головы состава",ts.Description="Смена головы состава на Гл.ст.пути"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {platform,{ts.Name="место смены головы состава",ts.Description="Главн.ст.путь где происходит смена головы состава",sk.link.RightClassIds=@StringList{{metro.Place}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.CheckPoint, metro.TrainRouteItem, {ts.Name="Контрольная точка",ts.Description="Контрольная точка"},
+    attrs = [
+      {in,{sk.TypeId="Integer",ts.Name="Время прибытия",ts.Description="Время прибытия на гл.ст.путь"}},
+      {out,{sk.TypeId="Integer",ts.Name="Время отправления",ts.Description="Время отправления с гл.ст.пути"}},
+      {overTime,{sk.TypeId="Integer",ts.Name="СРВ",ts.Description="Сверхнормативное время стоянки"}}
+    ],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {platform,{ts.Name="Гл.ст.путь",ts.Description="Главный станционный путь",sk.link.RightClassIds=@StringList{{metro.Place}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.ConnectionBranch, metro.Way, {ts.Name="Соединительная ветвь",ts.Description="Соединительная ветвь между станциями разных линий или депо"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {from,{ts.Name="Откуда",ts.Description="Место начала соединительной ветви",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationPath,metro.Depot,metro.NeighbourLine}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {to,{ts.Name="Куда",ts.Description="Место окончания соединительной ветви",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationPath,metro.Depot,metro.NeighbourLine}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.DayDowntime, metro.TrainRouteItem, {ts.Name="Дневной отстой",ts.Description="Дневной отстой в депо или на линии"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {parking,{ts.Name="Место дневного отстоя",ts.Description="Место дневного отстоя",sk.link.RightClassIds=@StringList{{metro.Place}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Depot, metro.Place, {ts.Name="Депо",ts.Description="Депо"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {toParkingPath,{ts.Name="Траектории депо-указатель",ts.Description="Траектории ухода на указатель из депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {fromParkingPath,{ts.Name="Траектории указатель-депо",ts.Description="Траектории выхода от указателя в депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {servicePoints,{ts.Name="Пункты ТО",ts.Description="Пункты ТО на линии",sk.link.RightClassIds=@StringList{{metro.ServicePoint}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.DepotConstraints}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.EnterLine, metro.TrainRouteItem, {ts.Name="Выход на линию",ts.Description="Выход поезда на линию для начала или продолжения марщрута"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path,{ts.Name="путь выхода",ts.Description="путь выхода с места отстоя/депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.MainStationPath, metro.Place, {ts.Name="Гл.ст.путь",ts.Description="Главный станционный путь пассажирской станции"},
+    attrs = [
+      {pathNum,{sk.TypeId="Integer",ts.Name="Номер гл.ст.пути",ts.Description="Номер гл.ст.пути"}}
+    ],
+    rtdata = [],
+    links = [
+      {toTransitPath,{ts.Name="Траектории ухода на другую линию",ts.Description="Траектории ухода на другую линию",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {fromTransitPath,{ts.Name="Траектории выхода с другой линии",ts.Description="Траектории выхода с другой линии",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {toDepotPath,{ts.Name="Траектории съема в депо",ts.Description="Траектории съема в депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {fromDepotPath,{ts.Name="Траектории выхода из депо",ts.Description="Траектории выхода из депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {toParkingPath,{ts.Name="Траектории депо-указатель",ts.Description="Траектории ухода на указатель из депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {fromParkingPath,{ts.Name="Траектории указатель-депо",ts.Description="Траектории выхода от указателя в депо",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {turnovers,{ts.Name="",ts.Description="",sk.link.RightClassIds=@StringList{{metro.TurnoverPath}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.NeighbourLine, metro.Place, {ts.Name="Соседняя линия",ts.Description="Абстрактная топологическая точка, обозначающая соседнюю линию"},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.NumberedTrainSchedule, metro.TrainSchedule, {ts.Name="Слот",ts.Description="Слот в суточном расписании движения поездов. Одна наклонная линия в сетке графика движения поездов."},
+    attrs = [
+      {trainNumber,{sk.TypeId="Integer",ts.Name="Номер поезда",ts.Description="Номер поезда"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { metro.ParkingSpot, metro.Place, {ts.Name="Указатель",ts.Description="Указатель ночной расстановки на линии"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {parking,{ts.Name="Ночная расстановка",ts.Description="Станция привязки ночной расстановки",sk.link.RightClassIds=@StringList{{metro.NightParking}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {location,{ts.Name="Место",ts.Description="Место ночной расстановки на линии",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationPath,metro.RailwayStage,metro.ConnectionBranch}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {depot,{ts.Name="Депо",ts.Description="Депо которому принадлежит указатель",sk.link.RightClassIds=@StringList{{metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {rri,{ts.Name="Связь НСИ",ts.Description="Служебная связь для создания дерева НСИ",sk.link.RightClassIds=@StringList{{metro.RunFrom,metro.RunTo}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.QuitLine, metro.TrainRouteItem, {ts.Name="Съем с линии",ts.Description="Съем с линии"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path,{ts.Name="Траектория съема",ts.Description="Траектория съема с линии",sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.RunFrom, metro.Way, {ts.Name="Выход",ts.Description="Выход от указателя ночной расстановки"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {from,{ts.Name="Указатель",ts.Description="Указатель ночной расстановки",sk.link.RightClassIds=@StringList{{metro.ParkingSpot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {to,{ts.Name="Куда",ts.Description="Топологическое место, куда движется поезд от указателя ночной расстановки",sk.link.RightClassIds=@StringList{{metro.StationPath,metro.MainStationPath,metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.RunTo, metro.Way, {ts.Name="Заход",ts.Description="Заход к указателю ночной расстановки"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {to,{ts.Name="Указатель",ts.Description="Указатель ночной расстановки",sk.link.RightClassIds=@StringList{{metro.ParkingSpot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {from,{ts.Name="Откуда",ts.Description="Топологическое место, откуда движется поезд к указателю ночной расстановки",sk.link.RightClassIds=@StringList{{metro.StationPath,metro.MainStationPath,metro.Depot}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.StationRoute, metro.Way, {ts.Name="Ст. маршрут",ts.Description="Станционный маршрут"},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {from,{ts.Name="Начало",ts.Description="Начало",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {to,{ts.Name="Конец",ts.Description="Конец",sk.link.RightClassIds=@StringList{{metro.MainStationPath,metro.StationPath}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { metro.Thread, metro.TrainRouteItem, {ts.Name="Поезд",ts.Description="Нитка маршрута"},
+    attrs = [
+      {pathNum,{sk.TypeId="Integer",ts.Name="Номер пути",ts.Description="Номер пути"}}
+    ],
+    rtdata = [],
+    links = [
+      {region,{ts.Name="регион",ts.Description="регион",sk.link.RightClassIds=@StringList{{metro.LineRegion}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {drivingMode,{ts.Name="Режим хода",ts.Description="Режим хода поезда",sk.link.RightClassIds=@StringList{{metro.DrivingMode}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {checkpoints,{ts.Name="Контрольные точки",ts.Description="Контрольные точки",sk.link.RightClassIds=@StringList{{metro.CheckPoint}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.ColorRefbook, SkObject, {},
+    attrs = [
+      {red,{sk.TypeId="Integer",ts.Name="красный [0-255]",ts.Description="красная составляющая в описании RGB"}},
+      {green,{sk.TypeId="Integer",ts.Name="зеленый [0-255]",ts.Description="зеленая составляющая в описании RGB"}},
+      {blue,{sk.TypeId="Integer",ts.Name="синий [0-255]",ts.Description="синяя составляющая в описании RGB"}},
+      {alfa,{sk.TypeId="Integer",ts.Name="альфа [0-255]",ts.Description="альфа прозрачность"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.DensityRefbook, SkObject, {},
+    attrs = [
+      {density,{sk.TypeId="Float",ts.Name="допустимая плотность[чел/кв.м]",ts.Description="допустимая плотность пассажиров [чел/кв.м]"}}
+    ],
+    rtdata = [],
+    links = [
+      {interval,{ts.Name="Интервал времени",ts.Description="Интервал времени от начала календарных суток.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.IntervalRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.GDPPhasesRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.IntervalRefbook, SkObject, {},
+    attrs = [
+      {number,{sk.TypeId="Integer",ts.Name="номер интервала",ts.Description="номер интервала начиная с 1 от начала календарных суток"}},
+      {type,{sk.TypeId="Integer",ts.Name="количество минут",ts.Description="количество минут в интервале"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.MaxIntervalRefbook, SkObject, {},
+    attrs = [
+      {maxInterval,{sk.TypeId="Integer",ts.Name="макс. допустимый интервал [сек]",ts.Description="максимально допустимый интервал движения в секундах"}}
+    ],
+    rtdata = [],
+    links = [
+      {interval,{ts.Name="Интервал времени",ts.Description="Интервал времени от начала календарных суток.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.IntervalRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.NoteDisplayTypesRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.ParkingSpotRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.TOTypesRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.ThreadTypesRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {color,{ts.Name="цвет",ts.Description="Цвет данного типа на ГДП",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.ColorRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.TrainModeRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.TrainSideRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.TrainTypeRefbook, SkObject, {},
+    attrs = [
+      {qtty,{sk.TypeId="Integer",ts.Name="Количество ваг-ов",ts.Description="Количество вагонов в составе"}}
+    ],
+    rtdata = [],
+    links = [
+      {wagon,{ts.Name="Тип вагона",ts.Description="Тип вагона для этого состава.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.WagonTypeRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.TurnoverTypesRefbook, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.WagonServiceRefbook, SkObject, {},
+    attrs = [
+      {onLine,{sk.TypeId="Boolean",ts.Name="ТО на линии",ts.Description="Признак возможности проведения данного типа ТО на ПТО на линии"}},
+      {hours,{sk.TypeId="Integer",ts.Name="Периодич.[час]",ts.Description="Периодичность в часах"}},
+      {mileage,{sk.TypeId="Integer",ts.Name="Периодич.[км]",ts.Description="Периодичность в километрах"}},
+      {tolerance,{sk.TypeId="Integer",ts.Name="Допуск периодич.[км]",ts.Description="Допуск периодичности в километрах"}},
+      {time,{sk.TypeId="Integer",ts.Name="Норма на 1 вагон[мин]",ts.Description="Норма времени на 1 вагон в минутах"}}
+    ],
+    rtdata = [],
+    links = [
+      {service,{ts.Name="Название ТО",ts.Description="ТО для данного типа вагона.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TOTypesRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {wagon,{ts.Name="Тип вагона",ts.Description="Тип вагона.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.WagonTypeRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.WagonTypeRefbook, SkObject, {},
+    attrs = [
+      {seatHead,{sk.TypeId="Integer",ts.Name="Кол-во сид. мест в гол.вагоне",ts.Description="Количество сидячих мест в головном вагоне"}},
+      {seatMedium,{sk.TypeId="Integer",ts.Name="Кол-во сидячих мест в промеж.вагоне",ts.Description="Количество сидячих мест в промежуточном вагоне"}},
+      {capacityHead,{sk.TypeId="Integer",ts.Name="Полная вместимость гол. вагона",ts.Description="Полная вместимость головного вагона при плотности 10чел/м2"}},
+      {capacityMedium,{sk.TypeId="Integer",ts.Name="Полная вместимость промеж. вагона",ts.Description="Полная вместимость промежуточного вагона при плотности 10чел/м2"}}
+    ],
+    rtdata = [],
+    links = [
+      {services,{ts.Name="список ТО вагона",ts.Description="Описание всех ТО для данного типа вагона.",sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.WagonServiceRefbook}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.refbook.class.refbook_item.trafficLightColors, SkObject, {},
+    attrs = [
+      {color,{ts.Name="Цвет",ts.Description="Цвет",sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {type,{ts.Name="Тип",ts.Description="Тип режима хода поезда",ts.sded.ClassIds=@StringList{{sk.refbook.class.refbook_item.TrainModeRefbook}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TrainModeRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.Line, SkObject, {},
+    attrs = [
+      {reservTrainPrefix,{ts.Name="Правило нумерации резервных поездов",ts.Description="Правило нумерации резервных поездов. Первые две цифры",ts.sded.DataType=@DataType{{String,{}}},ts.sded.IsSystem=false,sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.LineRegion, SkObject, {},
+    attrs = [
+      {notPeakMaxPairing,{sk.TypeId="Integer",ts.Name="Парность перехода с непика на пик",ts.Description="Значение часовой парности, при которой в автоматическом режиме режим хода должен быть изменен",ts.DefaultValue=1}},
+      {intervalMin,{timeFormat="mm_ss",ts.Name="Min интервал",ts.Description="Минимальный интервал движения",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.PassengerStation, SkObject, {},
+    attrs = [
+      {shortName,{ts.Name="Короткое имя",ts.Description="Сокращение по имени станции",ts.sded.DataType=@DataType{{String,{}}},ts.sded.IsSystem=false,sk.TypeId="String"}},
+      {overRun,{ts.Name="Допустимый захлест оборотов",ts.Description="Допустимый захлест двух оборотов",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {longTurn,{timeFormat="mm_ss",ts.Name="Смена головы без м/бр",ts.Description="Время на смену головы состава без маневровой бригады",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {shortTurn,{timeFormat="mm_ss",ts.Name="Смена головы с м/бр",ts.Description="Время на смену головы состава с маневровой бригадой",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {shuntingBrigade,{timeFormat="mm_ss",ts.Name="Время маневровой бригады",ts.Description="Время на переход маневровой бригады с одной платформы на другую",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {delay4LastTrain,{timeFormat="mm_ss",ts.Name="Задержка времени старта послед. полного пасс. поезда",ts.Description="Задержка времени старта последнего полного пассажирского поезда",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.PlannedTrafficSchedule, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {depoTrainType,{ts.Name="Депо - поезд",ts.Description="Тип поезда в депо для данной линии",ts.sded.ClassIds=@StringList{{metro.DepoTrainType}},ts.sded.IsExact=false,ts.sded.MaxCount=0,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.DepoTrainType}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}},
+      {depotConstraints,{ts.Name="Ограничения депо",ts.Description="Перечень ограничений для депо для графика",ts.sded.ClassIds=@StringList{{metro.DepotConstraints}},ts.sded.IsExact=false,ts.sded.MaxCount=0,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.DepotConstraints}},sk.link.LinkConstraint=@CollConstraint{0,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.RailwayStage, SkObject, {},
+    attrs = [
+      {distance,{ts.Name="Расстояние",ts.Description="Расстояние в метрах",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.ServicePoint, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [
+      {side,{ts.Name="Сторона канавы",ts.Description="Сторона канавы для осмотра поезда",ts.sded.ClassIds=@StringList{{sk.refbook.class.refbook_item.TrainSideRefbook}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.TrainSideRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.StageMode, SkObject, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода по перегону",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.StageModeFirst, SkObject, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода по перегону",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.Place, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.StationPath, sk.regref.comp.metro.RRI.FGDP.metro.Place, {},
+    attrs = [
+      {visualStagePoint,{sk.TypeId="Boolean",ts.Name="Раздельный пункт",ts.Description="Точка в перегоне — раздельный пункт"}}
+    ],
+    rtdata = [],
+    links = [
+      {servicePoint,{ts.Name="ПТО",ts.Description="ПТО на линии",ts.sded.ClassIds=@StringList{{metro.ServicePoint}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.ServicePoint}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.StopMode, SkObject, {},
+    attrs = [
+      {stopTime,{timeFormat="mm_ss",ts.Name="Время стоянки",ts.Description="Время стоянки",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.TrainService, SkObject, {},
+    attrs = [
+      {overtime,{ts.Name="Дополнительное время",ts.Description="Дополнительное время к нормативному по требованию депо",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.Pathway, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.TransitPath, sk.regref.comp.metro.RRI.FGDP.metro.Pathway, {},
+    attrs = [
+      {apply,{ts.Name="Применяется",ts.Description="Применяется в данном ГДП",ts.sded.DataType=@DataType{{Boolean,{}}},ts.sded.IsSystem=false,sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.TurnoverPath, sk.regref.comp.metro.RRI.FGDP.metro.Pathway, {},
+    attrs = [
+      {apply,{ts.Name="Применяется",ts.Description="Применяется в данном ГДП",ts.sded.DataType=@DataType{{Boolean,{}}},ts.sded.IsSystem=false,sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.TurnoverSchedule, SkObject, {},
+    attrs = [
+      {sleepInDepo,{ts.Name="Количество поездов, ночующих в депо",ts.Description="",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {sleepOnLine,{ts.Name="Кол-во поездов, ночующих на линии (на ночных расстановках)",ts.Description="",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {trainQtty,{ts.Name="Общее кол-во поездов графика оборотов",ts.Description="",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.Way, SkObject, {},
+    attrs = [],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.ConnectionBranch, sk.regref.comp.metro.RRI.FGDP.metro.Way, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {distance,{ts.Name="Расстояние, м",ts.Description="Расстояние в метрах",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.Depot, sk.regref.comp.metro.RRI.FGDP.metro.Place, {},
+    attrs = [
+      {serviceStart,{timeFormat="HH_mm_ss",ts.Name="Начало смены ТО",ts.Description="Начало смены ТО",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {serviceEnd,{timeFormat="HH_mm_ss",ts.Name="Конец смены ТО",ts.Description="Конец смены ТО",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {interval,{timeFormat="mm_ss",ts.Name="Минимальный интервал",ts.Description="Минимальный интервал выхода поездов из депо",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [
+      {pathFromLine,{ts.Name="Траектория съема по умолчанию",ts.Description="Траектория съема составов в депо по умолчанию",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path1FromLine,{ts.Name="Траектория съема по умолчанию с 1 пути",ts.Description="Траектория съема составов в депо по умолчаниюс 1 пути",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path2FromLine,{ts.Name="Траектория съема по умолчанию с 2 пути",ts.Description="Траектория съема составов в депо по умолчанию с 2 пути",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path1ToLine,{ts.Name="Траектория вывода по умолчанию на 1 путь",ts.Description="Траектория вывода составов из депо по умолчанию на 1 путь",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {path2ToLine,{ts.Name="Траектория вывода по умолчанию на 2 путь",ts.Description="Траектория вывода составов из депо по умолчанию на 2 путь",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {pathToLine,{ts.Name="Траектория вывода по умолчанию",ts.Description="Траектория вывода составов из депо по умолчанию",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.MainStationPath, sk.regref.comp.metro.RRI.FGDP.metro.Place, {},
+    attrs = [
+      {minInterval,{timeFormat="mm_ss",ts.Name="Мин. интервал прибытия",ts.Description="Минимальный интервал прибытия",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.ParkingSpot, sk.regref.comp.metro.RRI.FGDP.metro.Place, {},
+    attrs = [
+      {pointer,{ts.Name="Обозначение указателя",ts.Description="Обозначение указателя",ts.sded.DataType=@DataType{{String,{}}},ts.sded.IsSystem=false,sk.TypeId="String"}},
+      {picket,{ts.Name="Пикет",ts.Description="Координата в пикетах со смещением в метрах. Если Минус, то без 0. Если Плюс, то с 0.",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {earlyInLateOut,{ts.Name="Признак раннего захода и позднего выхода",ts.Description="Признак раннего захода и позднего выхода",ts.sded.DataType=@DataType{{Boolean,{}}},ts.sded.IsSystem=false,sk.TypeId="Boolean"}},
+      {entryDfltDeltaX,{ts.Name="Смещение Х координаты надписи входа по умолчанию",ts.Description="Смещение X координаты расположения надписи входа на холсте ГДП по умолчанию",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {entryDfltDeltaY,{ts.Name="Смещение Y координаты надписи входа по умолчанию",ts.Description="Смещение Y координаты расположения надписи входа на холсте ГДП по умолчанию",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {exitDfltDeltaX,{ts.Name="Смещение Х координаты надписи выхода по умолчанию",ts.Description="Смещение X координаты расположения надписи выхода на холсте ГДП по умолчанию",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {exitDfltDeltaY,{ts.Name="Смещение Y координаты надписи выхода по умолчанию",ts.Description="Смещение Y координаты расположения надписи выхода на холсте ГДП по умолчанию",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {dfltExitType,{ts.Name="Вид выхода по умолчанию",ts.Description="Вид выхода по умолчанию. 0 - произвольный, 1 - вертикально, 2 - продолжение нитки",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {dfltEntryType,{ts.Name="Вид захода по умолчанию",ts.Description="Вид захода по умолчанию. 0 - произвольный, 1 - вертикально, 2 - продолжение нитки",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [
+      {type,{ts.Name="Тип указателя",ts.Description="Чет, Нечет, Ежедневный, Резерв",ts.sded.ClassIds=@StringList{{sk.refbook.class.refbook_item.ParkingSpotRefbook}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.ParkingSpotRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {pathFromLine,{ts.Name="Траектория захода по умолчанию",ts.Description="Траектория захода составов под указатель по умолчанию",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {pathToLine,{ts.Name="Траектория выхода по умолчанию",ts.Description="Траектория выхода составов от указателя по умолчанию",ts.sded.ClassIds=@StringList{{metro.Pathway}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{metro.Pathway}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {entryDfltDisplayType,{ts.Name="По умолчанию,тип отображения выноски для захода",ts.Description="Вертикальный, Продолжение нитки, Произвольный",ts.sded.ClassIds=@StringList{{sk.refbook.class.refbook_item.NoteDisplayTypesRefbook}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.NoteDisplayTypesRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}},
+      {exitDfltDisplayType,{ts.Name="По умолчанию,тип отображения выноски для выхода",ts.Description="Вертикальный, Продолжение нитки, Произвольный",ts.sded.ClassIds=@StringList{{sk.refbook.class.refbook_item.NoteDisplayTypesRefbook}},ts.sded.IsExact=false,ts.sded.MaxCount=1,ts.sded.IsHist=false,sk.link.RightClassIds=@StringList{{sk.refbook.class.refbook_item.NoteDisplayTypesRefbook}},sk.link.LinkConstraint=@CollConstraint{1,0x0}}}
+    ],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.RunFrom, sk.regref.comp.metro.RRI.FGDP.metro.Way, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {distance,{ts.Name="Расстояние",ts.Description="Расстояние в метрах",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.RunTo, sk.regref.comp.metro.RRI.FGDP.metro.Way, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {distance,{ts.Name="Расстояние",ts.Description="Расстояние в метрах",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.regref.comp.metro.RRI.FGDP.metro.StationRoute, sk.regref.comp.metro.RRI.FGDP.metro.Way, {},
+    attrs = [
+      {time,{timeFormat="mm_ss",ts.Name="Время хода",ts.Description="Время хода",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {timeReverse,{timeFormat="mm_ss",ts.Name="Время хода в обратном направлении",ts.Description="Время хода по станционному маршруту в обратном направлении",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}},
+      {distance,{ts.Name="Расстояние, м",ts.Description="Расстояние в метрах",ts.sded.DataType=@DataType{{Integer,{}}},ts.sded.IsSystem=false,sk.TypeId="Integer"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.GuiGwPrefs.Section, SkObject, {},
+    attrs = [
+      {SectionDefParams,{ts.Name="Параметры",ts.Description="Параметры описание раздела настроек GUI",ts.DefaultValue=@OptionSet{{}},sk.TypeId="VALOBJ"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.prefs.textBand, SkObject, {},
+    attrs = [
+      {Class4GDPPrefs,{sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.prefs.timeBand, SkObject, {},
+    attrs = [
+      {Class4GDPPrefs,{sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.prefs.region, SkObject, {},
+    attrs = [
+      {Class4GDPPrefs,{sk.TypeId="Boolean"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { fgdp.blank.BandInfo, SkObject, {},
+    attrs = [
+      {bandTypeId,{sk.TypeId="String"}}
+    ],
+    rtdata = [],
+    links = [],
+    cmds = [],
+    events = []
+  },
+  { sk.onews.Profile, SkObject, {},
+    attrs = [
+      {params,{ts.Name="Параметры",ts.Description="Произвольные параметры профиля АРМ",ts.KeeperId="OptionSet",ts.DefaultValue=@OptionSet{{}},sk.TypeId="VALOBJ"}},
+      {isBuiltin,{ts.Name="Втсроенны?",ts.Description="Признак встроенного (нередактируемого и неудаляемого) профиля",ts.DefaultValue=false,sk.TypeId="ts.TsBool"}},
+      {rules,{ts.Name="Правила",ts.Description="Список правил разрешений возможностей АРМ",ts.KeeperId="S5OneWsProfileRules",ts.DefaultValue=@OptionSet{{}},sk.TypeId="VALOBJ"}}
+    ],
+    rtdata = [],
+    links = [
+      {users,{ts.Name="Пользователи",ts.Description="Пользователи, которым назначен этот профиль АРМ",sk.link.RightClassIds=@StringList{{sk.User}},sk.link.LinkConstraint=@CollConstraint{0,0x4}}}
+    ],
+    cmds = [],
+    events = []
+  }
+]
+Objects = [
+  metro.LineRegion = [
+    {metro.LineRegion[region_NKL_nks_njg],{ts.Name="Некрасовска-Нижегородская",ts.Description="Участок Некрасовска-Нижегородская",circle=false}}
+  ],
+  metro.PassengerStation = [
+    {metro.PassengerStation[passStation_nks],{ts.Name="Некрасовска",ts.Description="Станция Некрасовска",number=1,ramified=true}},
+    {metro.PassengerStation[passStation_lhm],{ts.Name="Лухмановская",ts.Description="Станция Лухмановская",number=2,ramified=true}},
+    {metro.PassengerStation[passStation_udm],{ts.Name="Улица Дмитриевского",ts.Description="Станция Улица Дмитриевского",number=3,ramified=true}},
+    {metro.PassengerStation[passStation_ksn],{ts.Name="Косино",ts.Description="Станция Косино",number=4,ramified=true}},
+    {metro.PassengerStation[passStation_uyv],{ts.Name="Юго-Восточная",ts.Description="Станция Юго-Восточная",number=5,ramified=true}},
+    {metro.PassengerStation[passStation_oks],{ts.Name="Окская",ts.Description="Станция Окская",number=6,ramified=true}},
+    {metro.PassengerStation[passStation_sth],{ts.Name="Стахановская",ts.Description="Станция Стахановская",number=7,ramified=true}},
+    {metro.PassengerStation[passStation_njg],{ts.Name="Нижегородская",ts.Description="Станция Нижегородская",number=8,ramified=true}}
+  ],
+  metro.MainStationPath = [
+    {metro.MainStationPath[mainStationPath_1_nks],{ts.Name="1 Гл.ст.путь Некрасовска",ts.Description="1 Гл.ст.путь Некрасовска",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_nks],{ts.Name="2 Гл.ст.путь Некрасовска",ts.Description="2 Гл.ст.путь Некрасовска",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_lhm],{ts.Name="1 Гл.ст.путь Лухмановская",ts.Description="1 Гл.ст.путь Лухмановская",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_lhm],{ts.Name="2 Гл.ст.путь Лухмановская",ts.Description="2 Гл.ст.путь Лухмановская",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_udm],{ts.Name="1 Гл.ст.путь Улица Дмитриевского",ts.Description="1 Гл.ст.путь Улица Дмитриевского",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_udm],{ts.Name="2 Гл.ст.путь Улица Дмитриевского",ts.Description="2 Гл.ст.путь Улица Дмитриевского",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_ksn],{ts.Name="1 Гл.ст.путь Косино",ts.Description="1 Гл.ст.путь Косино",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_ksn],{ts.Name="2 Гл.ст.путь Косино",ts.Description="2 Гл.ст.путь Косино",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_uyv],{ts.Name="1 Гл.ст.путь Юго-Восточная",ts.Description="1 Гл.ст.путь Юго-Восточная",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_uyv],{ts.Name="2 Гл.ст.путь Юго-Восточная",ts.Description="2 Гл.ст.путь Юго-Восточная",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_oks],{ts.Name="1 Гл.ст.путь Окская",ts.Description="1 Гл.ст.путь Окская",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_oks],{ts.Name="2 Гл.ст.путь Окская",ts.Description="2 Гл.ст.путь Окская",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_sth],{ts.Name="1 Гл.ст.путь Стахановская",ts.Description="1 Гл.ст.путь Стахановская",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_sth],{ts.Name="2 Гл.ст.путь Стахановская",ts.Description="2 Гл.ст.путь Стахановская",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_njg],{ts.Name="1 Гл.ст.путь Нижегородская",ts.Description="1 Гл.ст.путь Нижегородская",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_njg],{ts.Name="2 Гл.ст.путь Нижегородская",ts.Description="2 Гл.ст.путь Нижегородская",pathNum=2}}
+  ],
+  metro.StationPath = [
+    {metro.StationPath[stationPath_1_nks],{ts.Name="1 ст.путь Некрасовска",ts.Description="1 ст.путь Некрасовска",pathNum=1}},
+    {metro.StationPath[stationPath_2_nks],{ts.Name="2 ст.путь Некрасовска",ts.Description="2 ст.путь Некрасовска",pathNum=2}},
+    {metro.StationPath[stationPath_3_nks],{ts.Name="3 ст.путь Некрасовска",ts.Description="3 ст.путь Некрасовска",pathNum=3}},
+    {metro.StationPath[stationPath_4_nks],{ts.Name="4 ст.путь Некрасовска",ts.Description="4 ст.путь Некрасовска",pathNum=4}},
+    {metro.StationPath[stationPath_3_lhm],{ts.Name="3 ст.путь Лухмановская",ts.Description="3 ст.путь Лухмановская",pathNum=3}},
+    {metro.StationPath[stationPath_4_lhm],{ts.Name="4 ст.путь Лухмановская",ts.Description="4 ст.путь Лухмановская",pathNum=4}},
+    {metro.StationPath[stationPath_3_njg],{ts.Name="3 ст.путь Нижегородская",ts.Description="3 ст.путь Нижегородская",pathNum=3}}
+  ],
+  metro.StationRoute = [
+    {metro.StationRoute[stationRoute_nks_1msp_1sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 1 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1sp_1msp],{ts.Name="Некрасовска 1 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_2sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 2 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2sp_2msp],{ts.Name="Некрасовска 2 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1msp_3sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_3sp_1msp],{ts.Name="Некрасовска 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_3sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_3sp_2msp],{ts.Name="Некрасовска 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1msp_4sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_4sp_1msp],{ts.Name="Некрасовска 4 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_4sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_4sp_2msp],{ts.Name="Некрасовска 4 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_1msp_3sp],{ts.Name="Лухмановская 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_3sp_1msp],{ts.Name="Лухмановская 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_2msp_3sp],{ts.Name="Лухмановская 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_3sp_2msp],{ts.Name="Лухмановская 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_1msp_4sp],{ts.Name="Лухмановская 1 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_4sp_1msp],{ts.Name="Лухмановская 4 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_2msp_4sp],{ts.Name="Лухмановская 2 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_lhm_4sp_2msp],{ts.Name="Лухмановская 4 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_njg_1msp_3sp],{ts.Name="Нижегородская 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_njg_3sp_1msp],{ts.Name="Нижегородская 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_njg_2msp_3sp],{ts.Name="Нижегородская 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_njg_3sp_2msp],{ts.Name="Нижегородская 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}}
+  ],
+  metro.TurnoverPath = [
+    {metro.TurnoverPath[turnoverPath_nks_1msp_3sp_2msp],{ts.Name="оборот Некрасовска I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_2msp_3sp_1msp],{ts.Name="оборот Некрасовска II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_1msp_4sp_2msp],{ts.Name="оборот Некрасовска I Гл.ст.п - 4 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_2msp_4sp_1msp],{ts.Name="оборот Некрасовска II Гл.ст.п - 4 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_lhm_1msp_3sp_2msp],{ts.Name="оборот Лухмановская I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_lhm_2msp_3sp_1msp],{ts.Name="оборот Лухмановская II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_lhm_1msp_4sp_2msp],{ts.Name="оборот Лухмановская I Гл.ст.п - 4 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_lhm_2msp_4sp_1msp],{ts.Name="оборот Лухмановская II Гл.ст.п - 4 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_njg_1msp_3sp_2msp],{ts.Name="оборот Нижегородская I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_njg_2msp_3sp_1msp],{ts.Name="оборот Нижегородская II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}}
+  ],
+  metro.RailwayStage = [
+    {metro.RailwayStage[railwayStage_1_nks_lhm],{ts.Name="Некрасовска - Лухмановская",ts.Description="Некрасовска - Лухмановская",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_lhm_nks],{ts.Name="Лухмановская - Некрасовска",ts.Description="Лухмановская - Некрасовска",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского",ts.Description="Лухмановская - Улица Дмитриевского",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская",ts.Description="Улица Дмитриевского - Лухмановская",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_udm_ksn],{ts.Name="Улица Дмитриевского - Косино",ts.Description="Улица Дмитриевского - Косино",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_ksn_udm],{ts.Name="Косино - Улица Дмитриевского",ts.Description="Косино - Улица Дмитриевского",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_ksn_uyv],{ts.Name="Косино - Юго-Восточная",ts.Description="Косино - Юго-Восточная",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_uyv_ksn],{ts.Name="Юго-Восточная - Косино",ts.Description="Юго-Восточная - Косино",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_uyv_oks],{ts.Name="Юго-Восточная - Окская",ts.Description="Юго-Восточная - Окская",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_oks_uyv],{ts.Name="Окская - Юго-Восточная",ts.Description="Окская - Юго-Восточная",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_oks_sth],{ts.Name="Окская - Стахановская",ts.Description="Окская - Стахановская",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_sth_oks],{ts.Name="Стахановская - Окская",ts.Description="Стахановская - Окская",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_sth_njg],{ts.Name="Стахановская - Нижегородская",ts.Description="Стахановская - Нижегородская",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_njg_sth],{ts.Name="Нижегородская - Стахановская",ts.Description="Нижегородская - Стахановская",pathNum=2,shortName=""}}
+  ],
+  metro.Depot = [
+    {metro.Depot[depot_rud],{ts.Name="Руднево"}}
+  ],
+  metro.ConnectionBranch = [
+    {metro.ConnectionBranch[branch_lhm_4sp_depot_rud],{ts.Name="Лухмановская 4 - депо Руднево"}},
+    {metro.ConnectionBranch[branch_depot_rud_lhm_3sp],{ts.Name="депо Руднево - Лухмановская 3"}}
+  ],
+  metro.Pathway = [
+    {metro.Pathway[fromDepot_depot_rud_lhm_3sp_1msp],{ts.Name="депо Руднево - Лухмановская 3 сп 1 гсп"}},
+    {metro.Pathway[toDepot_lhm_2msp_4sp_depot_rud],{ts.Name="Лухмановская 2 гсп 4 сп - депо Руднево"}}
+  ],
+  metro.StageModeFirst = [
+    {metro.StageModeFirst[stageModeFirst_nks_lhm],{ts.Name="Некрасовска - Лухмановская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_lhm_nks],{ts.Name="Лухмановская - Некрасовска 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_udm_ksn],{ts.Name="Улица Дмитриевского - Косино 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_ksn_udm],{ts.Name="Косино - Улица Дмитриевского 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_ksn_uyv],{ts.Name="Косино - Юго-Восточная 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_uyv_ksn],{ts.Name="Юго-Восточная - Косино 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_uyv_oks],{ts.Name="Юго-Восточная - Окская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_oks_uyv],{ts.Name="Окская - Юго-Восточная 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_oks_sth],{ts.Name="Окская - Стахановская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_sth_oks],{ts.Name="Стахановская - Окская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_sth_njg],{ts.Name="Стахановская - Нижегородская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_njg_sth],{ts.Name="Нижегородская - Стахановская 1 поезд"}}
+  ],
+  metro.StageMode = [
+    {metro.StageMode[stageMode_00_nks_lhm],{ts.Name="Некрасовска - Лухмановская резерв"}},
+    {metro.StageMode[stageMode_00_lhm_nks],{ts.Name="Лухмановская - Некрасовска резерв"}},
+    {metro.StageMode[stageMode_01_nks_lhm],{ts.Name="Некрасовска - Лухмановская пик"}},
+    {metro.StageMode[stageMode_01_lhm_nks],{ts.Name="Лухмановская - Некрасовска пик"}},
+    {metro.StageMode[stageMode_02nks_lhm],{ts.Name="Некрасовска - Лухмановская не пик"}},
+    {metro.StageMode[stageMode_02lhm_nks],{ts.Name="Лухмановская - Некрасовска не пик"}},
+    {metro.StageMode[stageMode_00_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского резерв"}},
+    {metro.StageMode[stageMode_00_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская резерв"}},
+    {metro.StageMode[stageMode_01_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского пик"}},
+    {metro.StageMode[stageMode_01_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская пик"}},
+    {metro.StageMode[stageMode_02lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского не пик"}},
+    {metro.StageMode[stageMode_02udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская не пик"}},
+    {metro.StageMode[stageMode_00_udm_ksn],{ts.Name="Улица Дмитриевского - Косино резерв"}},
+    {metro.StageMode[stageMode_00_ksn_udm],{ts.Name="Косино - Улица Дмитриевского резерв"}},
+    {metro.StageMode[stageMode_01_udm_ksn],{ts.Name="Улица Дмитриевского - Косино пик"}},
+    {metro.StageMode[stageMode_01_ksn_udm],{ts.Name="Косино - Улица Дмитриевского пик"}},
+    {metro.StageMode[stageMode_02udm_ksn],{ts.Name="Улица Дмитриевского - Косино не пик"}},
+    {metro.StageMode[stageMode_02ksn_udm],{ts.Name="Косино - Улица Дмитриевского не пик"}},
+    {metro.StageMode[stageMode_00_ksn_uyv],{ts.Name="Косино - Юго-Восточная резерв"}},
+    {metro.StageMode[stageMode_00_uyv_ksn],{ts.Name="Юго-Восточная - Косино резерв"}},
+    {metro.StageMode[stageMode_01_ksn_uyv],{ts.Name="Косино - Юго-Восточная пик"}},
+    {metro.StageMode[stageMode_01_uyv_ksn],{ts.Name="Юго-Восточная - Косино пик"}},
+    {metro.StageMode[stageMode_02ksn_uyv],{ts.Name="Косино - Юго-Восточная не пик"}},
+    {metro.StageMode[stageMode_02uyv_ksn],{ts.Name="Юго-Восточная - Косино не пик"}},
+    {metro.StageMode[stageMode_00_uyv_oks],{ts.Name="Юго-Восточная - Окская резерв"}},
+    {metro.StageMode[stageMode_00_oks_uyv],{ts.Name="Окская - Юго-Восточная резерв"}},
+    {metro.StageMode[stageMode_01_uyv_oks],{ts.Name="Юго-Восточная - Окская пик"}},
+    {metro.StageMode[stageMode_01_oks_uyv],{ts.Name="Окская - Юго-Восточная пик"}},
+    {metro.StageMode[stageMode_02uyv_oks],{ts.Name="Юго-Восточная - Окская не пик"}},
+    {metro.StageMode[stageMode_02oks_uyv],{ts.Name="Окская - Юго-Восточная не пик"}},
+    {metro.StageMode[stageMode_00_oks_sth],{ts.Name="Окская - Стахановская резерв"}},
+    {metro.StageMode[stageMode_00_sth_oks],{ts.Name="Стахановская - Окская резерв"}},
+    {metro.StageMode[stageMode_01_oks_sth],{ts.Name="Окская - Стахановская пик"}},
+    {metro.StageMode[stageMode_01_sth_oks],{ts.Name="Стахановская - Окская пик"}},
+    {metro.StageMode[stageMode_02oks_sth],{ts.Name="Окская - Стахановская не пик"}},
+    {metro.StageMode[stageMode_02sth_oks],{ts.Name="Стахановская - Окская не пик"}},
+    {metro.StageMode[stageMode_00_sth_njg],{ts.Name="Стахановская - Нижегородская резерв"}},
+    {metro.StageMode[stageMode_00_njg_sth],{ts.Name="Нижегородская - Стахановская резерв"}},
+    {metro.StageMode[stageMode_01_sth_njg],{ts.Name="Стахановская - Нижегородская пик"}},
+    {metro.StageMode[stageMode_01_njg_sth],{ts.Name="Нижегородская - Стахановская пик"}},
+    {metro.StageMode[stageMode_02sth_njg],{ts.Name="Стахановская - Нижегородская не пик"}},
+    {metro.StageMode[stageMode_02njg_sth],{ts.Name="Нижегородская - Стахановская не пик"}}
+  ],
+  metro.StopMode = [
+    {metro.StopMode[stopMode_First_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска 1 поезд"}},
+    {metro.StopMode[stopMode_First_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска 1 поезд"}},
+    {metro.StopMode[stopMode_00_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска резерв"}},
+    {metro.StopMode[stopMode_00_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска резерв"}},
+    {metro.StopMode[stopMode_01_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска пик"}},
+    {metro.StopMode[stopMode_01_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска пик"}},
+    {metro.StopMode[stopMode_02_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска не пик"}},
+    {metro.StopMode[stopMode_02_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска не пик"}},
+    {metro.StopMode[stopMode_First_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская 1 поезд"}},
+    {metro.StopMode[stopMode_First_lhm_2],{ts.Name="2 гл. ст. путь ст. Лухмановская 1 поезд"}},
+    {metro.StopMode[stopMode_00_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская резерв"}},
+    {metro.StopMode[stopMode_00_lhm_2],{ts.Name="2 гл. ст. путь ст. Лухмановская резерв"}},
+    {metro.StopMode[stopMode_01_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская пик"}},
+    {metro.StopMode[stopMode_01_lhm_2],{ts.Name="2 гл. ст. путь ст. Лухмановская пик"}},
+    {metro.StopMode[stopMode_02_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская не пик"}},
+    {metro.StopMode[stopMode_02_lhm_2],{ts.Name="2 гл. ст. путь ст. Лухмановская не пик"}},
+    {metro.StopMode[stopMode_First_udm_1],{ts.Name="1 гл. ст. путь ст. Улица Дмитриевского 1 поезд"}},
+    {metro.StopMode[stopMode_First_udm_2],{ts.Name="2 гл. ст. путь ст. Улица Дмитриевского 1 поезд"}},
+    {metro.StopMode[stopMode_00_udm_1],{ts.Name="1 гл. ст. путь ст. Улица Дмитриевского резерв"}},
+    {metro.StopMode[stopMode_00_udm_2],{ts.Name="2 гл. ст. путь ст. Улица Дмитриевского резерв"}},
+    {metro.StopMode[stopMode_01_udm_1],{ts.Name="1 гл. ст. путь ст. Улица Дмитриевского пик"}},
+    {metro.StopMode[stopMode_01_udm_2],{ts.Name="2 гл. ст. путь ст. Улица Дмитриевского пик"}},
+    {metro.StopMode[stopMode_02_udm_1],{ts.Name="1 гл. ст. путь ст. Улица Дмитриевского не пик"}},
+    {metro.StopMode[stopMode_02_udm_2],{ts.Name="2 гл. ст. путь ст. Улица Дмитриевского не пик"}},
+    {metro.StopMode[stopMode_First_ksn_1],{ts.Name="1 гл. ст. путь ст. Косино 1 поезд"}},
+    {metro.StopMode[stopMode_First_ksn_2],{ts.Name="2 гл. ст. путь ст. Косино 1 поезд"}},
+    {metro.StopMode[stopMode_00_ksn_1],{ts.Name="1 гл. ст. путь ст. Косино резерв"}},
+    {metro.StopMode[stopMode_00_ksn_2],{ts.Name="2 гл. ст. путь ст. Косино резерв"}},
+    {metro.StopMode[stopMode_01_ksn_1],{ts.Name="1 гл. ст. путь ст. Косино пик"}},
+    {metro.StopMode[stopMode_01_ksn_2],{ts.Name="2 гл. ст. путь ст. Косино пик"}},
+    {metro.StopMode[stopMode_02_ksn_1],{ts.Name="1 гл. ст. путь ст. Косино не пик"}},
+    {metro.StopMode[stopMode_02_ksn_2],{ts.Name="2 гл. ст. путь ст. Косино не пик"}},
+    {metro.StopMode[stopMode_First_uyv_1],{ts.Name="1 гл. ст. путь ст. Юго-Восточная 1 поезд"}},
+    {metro.StopMode[stopMode_First_uyv_2],{ts.Name="2 гл. ст. путь ст. Юго-Восточная 1 поезд"}},
+    {metro.StopMode[stopMode_00_uyv_1],{ts.Name="1 гл. ст. путь ст. Юго-Восточная резерв"}},
+    {metro.StopMode[stopMode_00_uyv_2],{ts.Name="2 гл. ст. путь ст. Юго-Восточная резерв"}},
+    {metro.StopMode[stopMode_01_uyv_1],{ts.Name="1 гл. ст. путь ст. Юго-Восточная пик"}},
+    {metro.StopMode[stopMode_01_uyv_2],{ts.Name="2 гл. ст. путь ст. Юго-Восточная пик"}},
+    {metro.StopMode[stopMode_02_uyv_1],{ts.Name="1 гл. ст. путь ст. Юго-Восточная не пик"}},
+    {metro.StopMode[stopMode_02_uyv_2],{ts.Name="2 гл. ст. путь ст. Юго-Восточная не пик"}},
+    {metro.StopMode[stopMode_First_oks_1],{ts.Name="1 гл. ст. путь ст. Окская 1 поезд"}},
+    {metro.StopMode[stopMode_First_oks_2],{ts.Name="2 гл. ст. путь ст. Окская 1 поезд"}},
+    {metro.StopMode[stopMode_00_oks_1],{ts.Name="1 гл. ст. путь ст. Окская резерв"}},
+    {metro.StopMode[stopMode_00_oks_2],{ts.Name="2 гл. ст. путь ст. Окская резерв"}},
+    {metro.StopMode[stopMode_01_oks_1],{ts.Name="1 гл. ст. путь ст. Окская пик"}},
+    {metro.StopMode[stopMode_01_oks_2],{ts.Name="2 гл. ст. путь ст. Окская пик"}},
+    {metro.StopMode[stopMode_02_oks_1],{ts.Name="1 гл. ст. путь ст. Окская не пик"}},
+    {metro.StopMode[stopMode_02_oks_2],{ts.Name="2 гл. ст. путь ст. Окская не пик"}},
+    {metro.StopMode[stopMode_First_sth_1],{ts.Name="1 гл. ст. путь ст. Стахановская 1 поезд"}},
+    {metro.StopMode[stopMode_First_sth_2],{ts.Name="2 гл. ст. путь ст. Стахановская 1 поезд"}},
+    {metro.StopMode[stopMode_00_sth_1],{ts.Name="1 гл. ст. путь ст. Стахановская резерв"}},
+    {metro.StopMode[stopMode_00_sth_2],{ts.Name="2 гл. ст. путь ст. Стахановская резерв"}},
+    {metro.StopMode[stopMode_01_sth_1],{ts.Name="1 гл. ст. путь ст. Стахановская пик"}},
+    {metro.StopMode[stopMode_01_sth_2],{ts.Name="2 гл. ст. путь ст. Стахановская пик"}},
+    {metro.StopMode[stopMode_02_sth_1],{ts.Name="1 гл. ст. путь ст. Стахановская не пик"}},
+    {metro.StopMode[stopMode_02_sth_2],{ts.Name="2 гл. ст. путь ст. Стахановская не пик"}},
+    {metro.StopMode[stopMode_First_njg_1],{ts.Name="1 гл. ст. путь ст. Нижегородская 1 поезд"}},
+    {metro.StopMode[stopMode_First_njg_2],{ts.Name="2 гл. ст. путь ст. Нижегородская 1 поезд"}},
+    {metro.StopMode[stopMode_00_njg_1],{ts.Name="1 гл. ст. путь ст. Нижегородская резерв"}},
+    {metro.StopMode[stopMode_00_njg_2],{ts.Name="2 гл. ст. путь ст. Нижегородская резерв"}},
+    {metro.StopMode[stopMode_01_njg_1],{ts.Name="1 гл. ст. путь ст. Нижегородская пик"}},
+    {metro.StopMode[stopMode_01_njg_2],{ts.Name="2 гл. ст. путь ст. Нижегородская пик"}},
+    {metro.StopMode[stopMode_02_njg_1],{ts.Name="1 гл. ст. путь ст. Нижегородская не пик"}},
+    {metro.StopMode[stopMode_02_njg_2],{ts.Name="2 гл. ст. путь ст. Нижегородская не пик"}}
+  ],
+  metro.DrivingMode = [
+    {metro.DrivingMode[drivingMode_1_NKL_First],{ts.Name="1NKL первый",additional=false}},
+    {metro.DrivingMode[drivingMode_2_NKL_First],{ts.Name="2NKL первый",additional=false}},
+    {metro.DrivingMode[drivingMode_1_NKL_00],{ts.Name="1NKL резерв",additional=false}},
+    {metro.DrivingMode[drivingMode_2_NKL_00],{ts.Name="2NKL резерв",additional=false}},
+    {metro.DrivingMode[drivingMode_1_NKL_01],{ts.Name="1NKL пик",additional=false}},
+    {metro.DrivingMode[drivingMode_2_NKL_01],{ts.Name="2NKL пик",additional=false}},
+    {metro.DrivingMode[drivingMode_1_NKL_02],{ts.Name="1NKL не пик",additional=false}},
+    {metro.DrivingMode[drivingMode_2_NKL_02],{ts.Name="2NKL не пик",additional=false}}
+  ],
+  metro.LineDrivingModes = [
+    {metro.LineDrivingModes[lineDrivingModes_NKL],{ts.Name="Режимы хода NKL"}}
+  ],
+  sk.System = [
+    {sk.System[ThisSystem],{ts.Name="Система",ts.Description="Система"}}
+  ],
+  sk.User = [
+    {sk.User[root],{ts.Name="superuser",ts.Description="супер пользователь системы",password=""}},
+    {sk.User[Fedutinov],{ts.Name="Федутинов Константин Андреевич",password=""}},
+    {sk.User[borovkova],{ts.Name="Боровкова Надежда Анатольевна",password=""}},
+    {sk.User[semenova],{ts.Name="Семенова Ирина Николаевна",password=""}},
+    {sk.User[test],{ts.Name="AAA",password=""}},
+    {sk.User[user],{ts.Name="user",password=""}}
+  ],
+  sk.refbook.class.refbook = [
+    {sk.refbook.class.refbook[ColorRefbook],{ts.Name="Цвет",ts.Description="Цвет",ItemClassId="sk.refbook.class.refbook_item.ColorRefbook"}},
+    {sk.refbook.class.refbook[DensityRefbook],{ts.Name="Таблица плотности",ts.Description="Таблица допустимой плотности пассажиров по интервалам времени",ItemClassId="sk.refbook.class.refbook_item.DensityRefbook"}},
+    {sk.refbook.class.refbook[GDPPhasesRefbook],{ts.Name="Стадии разработки",ts.Description="Стадии разработки ГДП",ItemClassId="sk.refbook.class.refbook_item.GDPPhasesRefbook"}},
+    {sk.refbook.class.refbook[IntervalRefbook],{ts.Name="Интервал времени суток",ts.Description="Интервалы времени от начала календарных суток",ItemClassId="sk.refbook.class.refbook_item.IntervalRefbook"}},
+    {sk.refbook.class.refbook[MaxIntervalRefbook],{ts.Name="Макс. интервал",ts.Description="Максимальный интервал движения для определенного времени суток",ItemClassId="sk.refbook.class.refbook_item.MaxIntervalRefbook"}},
+    {sk.refbook.class.refbook[NoteDisplayTypesRefbook],{ts.Name="Типы отображения выносок",ts.Description="Возможные типы отображения выносок для для выходов/уходов на лини",ItemClassId="sk.refbook.class.refbook_item.NoteDisplayTypesRefbook"}},
+    {sk.refbook.class.refbook[ParkingSpotRefbook],{ts.Name="Типы мест ночной расстановки",ts.Description="Описание всех типов мест ночной расстановки",ItemClassId="sk.refbook.class.refbook_item.ParkingSpotRefbook"}},
+    {sk.refbook.class.refbook[TOTypesRefbook],{ts.Name="Названия ТО",ts.Description="Список названий ТО",ItemClassId="sk.refbook.class.refbook_item.TOTypesRefbook"}},
+    {sk.refbook.class.refbook[ThreadTypesRefbook],{ts.Name="Тип нитки",ts.Description="Возможные типы ниток ГДП",ItemClassId="sk.refbook.class.refbook_item.ThreadTypesRefbook"}},
+    {sk.refbook.class.refbook[TrainModeRefbook],{ts.Name="Тип режима хода",ts.Description="Возможные режимы хода поезда по перегону",ItemClassId="sk.refbook.class.refbook_item.TrainModeRefbook"}},
+    {sk.refbook.class.refbook[TrainSideRefbook],{ts.Name="Стороны канав",ts.Description="Стороны канав для осмотра поезда на ТО",ItemClassId="sk.refbook.class.refbook_item.TrainSideRefbook"}},
+    {sk.refbook.class.refbook[TrainTypeRefbook],{ts.Name="Тип состава",ts.Description="Тип состава",ItemClassId="sk.refbook.class.refbook_item.TrainTypeRefbook"}},
+    {sk.refbook.class.refbook[TurnoverTypesRefbook],{ts.Name="Типы оборотов",ts.Description="Возможные типы оборота",ItemClassId="sk.refbook.class.refbook_item.TurnoverTypesRefbook"}},
+    {sk.refbook.class.refbook[WagonServiceRefbook],{ts.Name="Тип ТО",ts.Description="Типы ТО для разных вагонов",ItemClassId="sk.refbook.class.refbook_item.WagonServiceRefbook"}},
+    {sk.refbook.class.refbook[WagonTypeRefbook],{ts.Name="Тип вагона",ts.Description="Тип вагона",ItemClassId="sk.refbook.class.refbook_item.WagonTypeRefbook"}},
+    {sk.refbook.class.refbook[trafficLightColors],{ts.Name="Цвета",ts.Description="Справочник цвет ламп светофоров",ItemClassId="sk.refbook.class.refbook_item.trafficLightColors"}}
+  ],
+  sk.refbook.class.refbook_item.DensityRefbook = [
+    {sk.refbook.class.refbook_item.DensityRefbook[density240_0],{ts.Name="Плотность в 01:00 - 05:00",ts.Description="Плотность в период Плотность в 01:00 - 05:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_1],{ts.Name="Плотность в 00:00 - 01:00",ts.Description="Плотность в период Плотность в 00:00 - 01:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_10],{ts.Name="Плотность в 09:00 - 10:00",ts.Description="Плотность в период Плотность в 09:00 - 10:00",density=4.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_11],{ts.Name="Плотность в 10:00 - 11:00",ts.Description="Плотность в период Плотность в 10:00 - 11:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_12],{ts.Name="Плотность в 11:00 - 12:00",ts.Description="Плотность в период Плотность в 11:00 - 12:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_13],{ts.Name="Плотность в 12:00 - 13:00",ts.Description="Плотность в период Плотность в 12:00 - 13:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_14],{ts.Name="Плотность в 13:00 - 14:00",ts.Description="Плотность в период Плотность в 13:00 - 14:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_15],{ts.Name="Плотность в 14:00 - 15:00",ts.Description="Плотность в период Плотность в 14:00 - 15:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_16],{ts.Name="Плотность в 15:00 - 16:00",ts.Description="Плотность в период Плотность в 15:00 - 16:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_17],{ts.Name="Плотность в 16:00 - 17:00",ts.Description="Плотность в период Плотность в 16:00 - 17:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_18],{ts.Name="Плотность в 17:00 - 18:00",ts.Description="Плотность в период Плотность в 17:00 - 18:00",density=4.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_19],{ts.Name="Плотность в 18:00 - 19:00",ts.Description="Плотность в период Плотность в 18:00 - 19:00",density=4.5}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_2],{ts.Name="Плотность в 01:00 - 02:00",ts.Description="Плотность в период Плотность в 01:00 - 02:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_20],{ts.Name="Плотность в 19:00 - 20:00",ts.Description="Плотность в период Плотность в 19:00 - 20:00",density=4.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_21],{ts.Name="Плотность в 20:00 - 21:00",ts.Description="Плотность в период Плотность в 20:00 - 21:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_22],{ts.Name="Плотность в 21:00 - 22:00",ts.Description="Плотность в период Плотность в 21:00 - 22:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_23],{ts.Name="Плотность в 22:00 - 23:00",ts.Description="Плотность в период Плотность в 22:00 - 23:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_24],{ts.Name="Плотность в 23:00 - 00:00",ts.Description="Плотность в период Плотность в 23:00 - 00:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_3],{ts.Name="Плотность в 02:00 - 03:00",ts.Description="Плотность в период Плотность в 02:00 - 03:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_4],{ts.Name="Плотность в 03:00 - 04:00",ts.Description="Плотность в период Плотность в 03:00 - 04:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_5],{ts.Name="Плотность в 04:00 - 05:00",ts.Description="Плотность в период Плотность в 04:00 - 05:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_6],{ts.Name="Плотность в 05:00 - 06:00",ts.Description="Плотность в период Плотность в 05:00 - 06:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_7],{ts.Name="Плотность в 06:00 - 07:00",ts.Description="Плотность в период Плотность в 06:00 - 07:00",density=3.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_8],{ts.Name="Плотность в 07:00 - 08:00",ts.Description="Плотность в период Плотность в 07:00 - 08:00",density=4.0}},
+    {sk.refbook.class.refbook_item.DensityRefbook[density60_9],{ts.Name="Плотность в 08:00 - 09:00",ts.Description="Плотность в период Плотность в 08:00 - 09:00",density=4.5}}
+  ],
+  sk.refbook.class.refbook_item.GDPPhasesRefbook = [
+    {sk.refbook.class.refbook_item.GDPPhasesRefbook[CONFIRMED],{ts.Name="утвержденный",ts.Description="График, утвержденный приказом"}},
+    {sk.refbook.class.refbook_item.GDPPhasesRefbook[DEVELOPING],{ts.Name="разработка",ts.Description="График в стадии разработки и согласования"}},
+    {sk.refbook.class.refbook_item.GDPPhasesRefbook[PLANNED],{ts.Name="плановый",ts.Description="График, введенный в действие, помещенный в БД графиков движения"}},
+    {sk.refbook.class.refbook_item.GDPPhasesRefbook[READY],{ts.Name="готовый",ts.Description="График, прошедший проверку"}}
+  ],
+  sk.refbook.class.refbook_item.IntervalRefbook = [
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_1],{ts.Name="00:00 - 00:15",ts.Description="Интервал времени суток: 00:00 - 00:15",number=1,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_10],{ts.Name="02:15 - 02:30",ts.Description="Интервал времени суток: 02:15 - 02:30",number=10,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_11],{ts.Name="02:30 - 02:45",ts.Description="Интервал времени суток: 02:30 - 02:45",number=11,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_12],{ts.Name="02:45 - 03:00",ts.Description="Интервал времени суток: 02:45 - 03:00",number=12,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_13],{ts.Name="03:00 - 03:15",ts.Description="Интервал времени суток: 03:00 - 03:15",number=13,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_14],{ts.Name="03:15 - 03:30",ts.Description="Интервал времени суток: 03:15 - 03:30",number=14,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_15],{ts.Name="03:30 - 03:45",ts.Description="Интервал времени суток: 03:30 - 03:45",number=15,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_16],{ts.Name="03:45 - 04:00",ts.Description="Интервал времени суток: 03:45 - 04:00",number=16,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_17],{ts.Name="04:00 - 04:15",ts.Description="Интервал времени суток: 04:00 - 04:15",number=17,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_18],{ts.Name="04:15 - 04:30",ts.Description="Интервал времени суток: 04:15 - 04:30",number=18,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_19],{ts.Name="04:30 - 04:45",ts.Description="Интервал времени суток: 04:30 - 04:45",number=19,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_2],{ts.Name="00:15 - 00:30",ts.Description="Интервал времени суток: 00:15 - 00:30",number=2,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_20],{ts.Name="04:45 - 05:00",ts.Description="Интервал времени суток: 04:45 - 05:00",number=20,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_21],{ts.Name="05:00 - 05:15",ts.Description="Интервал времени суток: 05:00 - 05:15",number=21,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_22],{ts.Name="05:15 - 05:30",ts.Description="Интервал времени суток: 05:15 - 05:30",number=22,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_23],{ts.Name="05:30 - 05:45",ts.Description="Интервал времени суток: 05:30 - 05:45",number=23,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_24],{ts.Name="05:45 - 06:00",ts.Description="Интервал времени суток: 05:45 - 06:00",number=24,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_25],{ts.Name="06:00 - 06:15",ts.Description="Интервал времени суток: 06:00 - 06:15",number=25,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_26],{ts.Name="06:15 - 06:30",ts.Description="Интервал времени суток: 06:15 - 06:30",number=26,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_27],{ts.Name="06:30 - 06:45",ts.Description="Интервал времени суток: 06:30 - 06:45",number=27,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_28],{ts.Name="06:45 - 07:00",ts.Description="Интервал времени суток: 06:45 - 07:00",number=28,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_29],{ts.Name="07:00 - 07:15",ts.Description="Интервал времени суток: 07:00 - 07:15",number=29,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_3],{ts.Name="00:30 - 00:45",ts.Description="Интервал времени суток: 00:30 - 00:45",number=3,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_30],{ts.Name="07:15 - 07:30",ts.Description="Интервал времени суток: 07:15 - 07:30",number=30,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_31],{ts.Name="07:30 - 07:45",ts.Description="Интервал времени суток: 07:30 - 07:45",number=31,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_32],{ts.Name="07:45 - 08:00",ts.Description="Интервал времени суток: 07:45 - 08:00",number=32,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_33],{ts.Name="08:00 - 08:15",ts.Description="Интервал времени суток: 08:00 - 08:15",number=33,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_34],{ts.Name="08:15 - 08:30",ts.Description="Интервал времени суток: 08:15 - 08:30",number=34,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_35],{ts.Name="08:30 - 08:45",ts.Description="Интервал времени суток: 08:30 - 08:45",number=35,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_36],{ts.Name="08:45 - 09:00",ts.Description="Интервал времени суток: 08:45 - 09:00",number=36,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_37],{ts.Name="09:00 - 09:15",ts.Description="Интервал времени суток: 09:00 - 09:15",number=37,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_38],{ts.Name="09:15 - 09:30",ts.Description="Интервал времени суток: 09:15 - 09:30",number=38,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_39],{ts.Name="09:30 - 09:45",ts.Description="Интервал времени суток: 09:30 - 09:45",number=39,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_4],{ts.Name="00:45 - 01:00",ts.Description="Интервал времени суток: 00:45 - 01:00",number=4,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_40],{ts.Name="09:45 - 10:00",ts.Description="Интервал времени суток: 09:45 - 10:00",number=40,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_41],{ts.Name="10:00 - 10:15",ts.Description="Интервал времени суток: 10:00 - 10:15",number=41,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_42],{ts.Name="10:15 - 10:30",ts.Description="Интервал времени суток: 10:15 - 10:30",number=42,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_43],{ts.Name="10:30 - 10:45",ts.Description="Интервал времени суток: 10:30 - 10:45",number=43,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_44],{ts.Name="10:45 - 11:00",ts.Description="Интервал времени суток: 10:45 - 11:00",number=44,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_45],{ts.Name="11:00 - 11:15",ts.Description="Интервал времени суток: 11:00 - 11:15",number=45,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_46],{ts.Name="11:15 - 11:30",ts.Description="Интервал времени суток: 11:15 - 11:30",number=46,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_47],{ts.Name="11:30 - 11:45",ts.Description="Интервал времени суток: 11:30 - 11:45",number=47,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_48],{ts.Name="11:45 - 12:00",ts.Description="Интервал времени суток: 11:45 - 12:00",number=48,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_49],{ts.Name="12:00 - 12:15",ts.Description="Интервал времени суток: 12:00 - 12:15",number=49,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_5],{ts.Name="01:00 - 01:15",ts.Description="Интервал времени суток: 01:00 - 01:15",number=5,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_50],{ts.Name="12:15 - 12:30",ts.Description="Интервал времени суток: 12:15 - 12:30",number=50,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_51],{ts.Name="12:30 - 12:45",ts.Description="Интервал времени суток: 12:30 - 12:45",number=51,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_52],{ts.Name="12:45 - 13:00",ts.Description="Интервал времени суток: 12:45 - 13:00",number=52,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_53],{ts.Name="13:00 - 13:15",ts.Description="Интервал времени суток: 13:00 - 13:15",number=53,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_54],{ts.Name="13:15 - 13:30",ts.Description="Интервал времени суток: 13:15 - 13:30",number=54,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_55],{ts.Name="13:30 - 13:45",ts.Description="Интервал времени суток: 13:30 - 13:45",number=55,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_56],{ts.Name="13:45 - 14:00",ts.Description="Интервал времени суток: 13:45 - 14:00",number=56,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_57],{ts.Name="14:00 - 14:15",ts.Description="Интервал времени суток: 14:00 - 14:15",number=57,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_58],{ts.Name="14:15 - 14:30",ts.Description="Интервал времени суток: 14:15 - 14:30",number=58,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_59],{ts.Name="14:30 - 14:45",ts.Description="Интервал времени суток: 14:30 - 14:45",number=59,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_6],{ts.Name="01:15 - 01:30",ts.Description="Интервал времени суток: 01:15 - 01:30",number=6,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_60],{ts.Name="14:45 - 15:00",ts.Description="Интервал времени суток: 14:45 - 15:00",number=60,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_61],{ts.Name="15:00 - 15:15",ts.Description="Интервал времени суток: 15:00 - 15:15",number=61,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_62],{ts.Name="15:15 - 15:30",ts.Description="Интервал времени суток: 15:15 - 15:30",number=62,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_63],{ts.Name="15:30 - 15:45",ts.Description="Интервал времени суток: 15:30 - 15:45",number=63,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_64],{ts.Name="15:45 - 16:00",ts.Description="Интервал времени суток: 15:45 - 16:00",number=64,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_65],{ts.Name="16:00 - 16:15",ts.Description="Интервал времени суток: 16:00 - 16:15",number=65,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_66],{ts.Name="16:15 - 16:30",ts.Description="Интервал времени суток: 16:15 - 16:30",number=66,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_67],{ts.Name="16:30 - 16:45",ts.Description="Интервал времени суток: 16:30 - 16:45",number=67,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_68],{ts.Name="16:45 - 17:00",ts.Description="Интервал времени суток: 16:45 - 17:00",number=68,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_69],{ts.Name="17:00 - 17:15",ts.Description="Интервал времени суток: 17:00 - 17:15",number=69,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_7],{ts.Name="01:30 - 01:45",ts.Description="Интервал времени суток: 01:30 - 01:45",number=7,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_70],{ts.Name="17:15 - 17:30",ts.Description="Интервал времени суток: 17:15 - 17:30",number=70,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_71],{ts.Name="17:30 - 17:45",ts.Description="Интервал времени суток: 17:30 - 17:45",number=71,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_72],{ts.Name="17:45 - 18:00",ts.Description="Интервал времени суток: 17:45 - 18:00",number=72,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_73],{ts.Name="18:00 - 18:15",ts.Description="Интервал времени суток: 18:00 - 18:15",number=73,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_74],{ts.Name="18:15 - 18:30",ts.Description="Интервал времени суток: 18:15 - 18:30",number=74,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_75],{ts.Name="18:30 - 18:45",ts.Description="Интервал времени суток: 18:30 - 18:45",number=75,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_76],{ts.Name="18:45 - 19:00",ts.Description="Интервал времени суток: 18:45 - 19:00",number=76,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_77],{ts.Name="19:00 - 19:15",ts.Description="Интервал времени суток: 19:00 - 19:15",number=77,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_78],{ts.Name="19:15 - 19:30",ts.Description="Интервал времени суток: 19:15 - 19:30",number=78,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_79],{ts.Name="19:30 - 19:45",ts.Description="Интервал времени суток: 19:30 - 19:45",number=79,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_8],{ts.Name="01:45 - 02:00",ts.Description="Интервал времени суток: 01:45 - 02:00",number=8,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_80],{ts.Name="19:45 - 20:00",ts.Description="Интервал времени суток: 19:45 - 20:00",number=80,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_81],{ts.Name="20:00 - 20:15",ts.Description="Интервал времени суток: 20:00 - 20:15",number=81,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_82],{ts.Name="20:15 - 20:30",ts.Description="Интервал времени суток: 20:15 - 20:30",number=82,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_83],{ts.Name="20:30 - 20:45",ts.Description="Интервал времени суток: 20:30 - 20:45",number=83,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_84],{ts.Name="20:45 - 21:00",ts.Description="Интервал времени суток: 20:45 - 21:00",number=84,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_85],{ts.Name="21:00 - 21:15",ts.Description="Интервал времени суток: 21:00 - 21:15",number=85,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_86],{ts.Name="21:15 - 21:30",ts.Description="Интервал времени суток: 21:15 - 21:30",number=86,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_87],{ts.Name="21:30 - 21:45",ts.Description="Интервал времени суток: 21:30 - 21:45",number=87,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_88],{ts.Name="21:45 - 22:00",ts.Description="Интервал времени суток: 21:45 - 22:00",number=88,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_89],{ts.Name="22:00 - 22:15",ts.Description="Интервал времени суток: 22:00 - 22:15",number=89,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_9],{ts.Name="02:00 - 02:15",ts.Description="Интервал времени суток: 02:00 - 02:15",number=9,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_90],{ts.Name="22:15 - 22:30",ts.Description="Интервал времени суток: 22:15 - 22:30",number=90,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_91],{ts.Name="22:30 - 22:45",ts.Description="Интервал времени суток: 22:30 - 22:45",number=91,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_92],{ts.Name="22:45 - 23:00",ts.Description="Интервал времени суток: 22:45 - 23:00",number=92,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_93],{ts.Name="23:00 - 23:15",ts.Description="Интервал времени суток: 23:00 - 23:15",number=93,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_94],{ts.Name="23:15 - 23:30",ts.Description="Интервал времени суток: 23:15 - 23:30",number=94,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_95],{ts.Name="23:30 - 23:45",ts.Description="Интервал времени суток: 23:30 - 23:45",number=95,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval15_96],{ts.Name="23:45 - 00:00",ts.Description="Интервал времени суток: 23:45 - 00:00",number=96,type=15}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval240_0],{ts.Name="01:00 - 05:00",ts.Description="Интервал времени суток: 01:00 - 05:00",number=0,type=240}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_1],{ts.Name="00:00 - 01:00",ts.Description="Интервал времени суток: 00:00 - 01:00",number=1,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_10],{ts.Name="09:00 - 10:00",ts.Description="Интервал времени суток: 09:00 - 10:00",number=10,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_11],{ts.Name="10:00 - 11:00",ts.Description="Интервал времени суток: 10:00 - 11:00",number=11,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_12],{ts.Name="11:00 - 12:00",ts.Description="Интервал времени суток: 11:00 - 12:00",number=12,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_13],{ts.Name="12:00 - 13:00",ts.Description="Интервал времени суток: 12:00 - 13:00",number=13,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_14],{ts.Name="13:00 - 14:00",ts.Description="Интервал времени суток: 13:00 - 14:00",number=14,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_15],{ts.Name="14:00 - 15:00",ts.Description="Интервал времени суток: 14:00 - 15:00",number=15,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_16],{ts.Name="15:00 - 16:00",ts.Description="Интервал времени суток: 15:00 - 16:00",number=16,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_17],{ts.Name="16:00 - 17:00",ts.Description="Интервал времени суток: 16:00 - 17:00",number=17,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_18],{ts.Name="17:00 - 18:00",ts.Description="Интервал времени суток: 17:00 - 18:00",number=18,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_19],{ts.Name="18:00 - 19:00",ts.Description="Интервал времени суток: 18:00 - 19:00",number=19,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_2],{ts.Name="01:00 - 02:00",ts.Description="Интервал времени суток: 01:00 - 02:00",number=2,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_20],{ts.Name="19:00 - 20:00",ts.Description="Интервал времени суток: 19:00 - 20:00",number=20,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_21],{ts.Name="20:00 - 21:00",ts.Description="Интервал времени суток: 20:00 - 21:00",number=21,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_22],{ts.Name="21:00 - 22:00",ts.Description="Интервал времени суток: 21:00 - 22:00",number=22,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_23],{ts.Name="22:00 - 23:00",ts.Description="Интервал времени суток: 22:00 - 23:00",number=23,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_24],{ts.Name="23:00 - 00:00",ts.Description="Интервал времени суток: 23:00 - 00:00",number=24,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_3],{ts.Name="02:00 - 03:00",ts.Description="Интервал времени суток: 02:00 - 03:00",number=3,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_4],{ts.Name="03:00 - 04:00",ts.Description="Интервал времени суток: 03:00 - 04:00",number=4,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_5],{ts.Name="04:00 - 05:00",ts.Description="Интервал времени суток: 04:00 - 05:00",number=5,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_6],{ts.Name="05:00 - 06:00",ts.Description="Интервал времени суток: 05:00 - 06:00",number=6,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_7],{ts.Name="06:00 - 07:00",ts.Description="Интервал времени суток: 06:00 - 07:00",number=7,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_8],{ts.Name="07:00 - 08:00",ts.Description="Интервал времени суток: 07:00 - 08:00",number=8,type=60}},
+    {sk.refbook.class.refbook_item.IntervalRefbook[interval60_9],{ts.Name="08:00 - 09:00",ts.Description="Интервал времени суток: 08:00 - 09:00",number=9,type=60}}
+  ],
+  sk.refbook.class.refbook_item.MaxIntervalRefbook = [
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval240_0],{ts.Name="Max интервал в 01:00 - 05:00",ts.Description="Max интервал движения период Max интервал в 01:00 - 05:00",maxInterval=1800}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_1],{ts.Name="Max интервал в 00:00 - 01:00",ts.Description="Max интервал движения период Max интервал в 00:00 - 01:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_10],{ts.Name="Max интервал в 09:00 - 10:00",ts.Description="Max интервал движения период Max интервал в 09:00 - 10:00",maxInterval=360}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_11],{ts.Name="Max интервал в 10:00 - 11:00",ts.Description="Max интервал движения период Max интервал в 10:00 - 11:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_12],{ts.Name="Max интервал в 11:00 - 12:00",ts.Description="Max интервал движения период Max интервал в 11:00 - 12:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_13],{ts.Name="Max интервал в 12:00 - 13:00",ts.Description="Max интервал движения период Max интервал в 12:00 - 13:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_14],{ts.Name="Max интервал в 13:00 - 14:00",ts.Description="Max интервал движения период Max интервал в 13:00 - 14:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_15],{ts.Name="Max интервал в 14:00 - 15:00",ts.Description="Max интервал движения период Max интервал в 14:00 - 15:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_16],{ts.Name="Max интервал в 15:00 - 16:00",ts.Description="Max интервал движения период Max интервал в 15:00 - 16:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_17],{ts.Name="Max интервал в 16:00 - 17:00",ts.Description="Max интервал движения период Max интервал в 16:00 - 17:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_18],{ts.Name="Max интервал в 17:00 - 18:00",ts.Description="Max интервал движения период Max интервал в 17:00 - 18:00",maxInterval=360}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_19],{ts.Name="Max интервал в 18:00 - 19:00",ts.Description="Max интервал движения период Max интервал в 18:00 - 19:00",maxInterval=360}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_2],{ts.Name="Max интервал в 01:00 - 02:00",ts.Description="Max интервал движения период Max интервал в 01:00 - 02:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_20],{ts.Name="Max интервал в 19:00 - 20:00",ts.Description="Max интервал движения период Max интервал в 19:00 - 20:00",maxInterval=360}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_21],{ts.Name="Max интервал в 20:00 - 21:00",ts.Description="Max интервал движения период Max интервал в 20:00 - 21:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_22],{ts.Name="Max интервал в 21:00 - 22:00",ts.Description="Max интервал движения период Max интервал в 21:00 - 22:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_23],{ts.Name="Max интервал в 22:00 - 23:00",ts.Description="Max интервал движения период Max интервал в 22:00 - 23:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_24],{ts.Name="Max интервал в 23:00 - 00:00",ts.Description="Max интервал движения период Max интервал в 23:00 - 00:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_3],{ts.Name="Max интервал в 02:00 - 03:00",ts.Description="Max интервал движения период Max интервал в 02:00 - 03:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_4],{ts.Name="Max интервал в 03:00 - 04:00",ts.Description="Max интервал движения период Max интервал в 03:00 - 04:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_5],{ts.Name="Max интервал в 04:00 - 05:00",ts.Description="Max интервал движения период Max интервал в 04:00 - 05:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_6],{ts.Name="Max интервал в 05:00 - 06:00",ts.Description="Max интервал движения период Max интервал в 05:00 - 06:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_7],{ts.Name="Max интервал в 06:00 - 07:00",ts.Description="Max интервал движения период Max интервал в 06:00 - 07:00",maxInterval=600}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_8],{ts.Name="Max интервал в 07:00 - 08:00",ts.Description="Max интервал движения период Max интервал в 07:00 - 08:00",maxInterval=360}},
+    {sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_9],{ts.Name="Max интервал в 08:00 - 09:00",ts.Description="Max интервал движения период Max интервал в 08:00 - 09:00",maxInterval=360}}
+  ],
+  sk.refbook.class.refbook_item.NoteDisplayTypesRefbook = [
+    {sk.refbook.class.refbook_item.NoteDisplayTypesRefbook[ANY],{ts.Name="произвольный",ts.Description="Позволяет разместить надпись в любом месте, сегмент нитки может быть под любым углом"}},
+    {sk.refbook.class.refbook_item.NoteDisplayTypesRefbook[THREADS_EXTENSION],{ts.Name="продолжение нитки",ts.Description="Один из сегментов выноски является продолжением нитки"}},
+    {sk.refbook.class.refbook_item.NoteDisplayTypesRefbook[VERTICAL],{ts.Name="вертикальный",ts.Description="Один из сегментов выноски является вертикальным"}}
+  ],
+  sk.refbook.class.refbook_item.ParkingSpotRefbook = [
+    {sk.refbook.class.refbook_item.ParkingSpotRefbook[ALWAYS],{ts.Name="постоянное",ts.Description="Постоянное место ночной расстановки"}},
+    {sk.refbook.class.refbook_item.ParkingSpotRefbook[EVEN],{ts.Name="четная",ts.Description="Расстановка по четным дня"}},
+    {sk.refbook.class.refbook_item.ParkingSpotRefbook[ODD],{ts.Name="нечетная",ts.Description="Расстановка по нечетным дням"}},
+    {sk.refbook.class.refbook_item.ParkingSpotRefbook[RESERVE],{ts.Name="резерв",ts.Description="Резервное место ночной расстановки"}},
+    {sk.refbook.class.refbook_item.ParkingSpotRefbook[SPEC],{ts.Name="специальная",ts.Description="Специальное место ночной расстановик"}}
+  ],
+  sk.refbook.class.refbook_item.TOTypesRefbook = [
+    {sk.refbook.class.refbook_item.TOTypesRefbook[eo],{ts.Name="ЭО",ts.Description="Эксплуатационное обслуживание"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[km],{ts.Name="КМ",ts.Description="Концевой маршрут"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[to],{ts.Name="ТО",ts.Description="Техническое обслуживание"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[to0],{ts.Name="ТО-0",ts.Description="Периодический технический осмотр (уборка)"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[to1],{ts.Name="ТО-1",ts.Description="Периодический технический осмотр 1"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[to2],{ts.Name="ТО-2",ts.Description="Периодическое техническое обслуживание 2"}},
+    {sk.refbook.class.refbook_item.TOTypesRefbook[to3],{ts.Name="ТО-3",ts.Description="Периодическое техническое обслуживание 3"}}
+  ],
+  sk.refbook.class.refbook_item.ThreadTypesRefbook = [
+    {sk.refbook.class.refbook_item.ThreadTypesRefbook[PASSANGERS],{ts.Name="пассажирская",ts.Description="Перевозка пассажиров"}},
+    {sk.refbook.class.refbook_item.ThreadTypesRefbook[RESERVE],{ts.Name="резерв",ts.Description="Резервный поезд"}},
+    {sk.refbook.class.refbook_item.ThreadTypesRefbook[THYRISTOR],{ts.Name="тиристорная",ts.Description="Тиристорная обкатка"}}
+  ],
+  sk.refbook.class.refbook_item.TrainModeRefbook = [
+    {sk.refbook.class.refbook_item.TrainModeRefbook[FIRSTTRAIN],{ts.Name="первый",ts.Description="Режим первого поезда"}},
+    {sk.refbook.class.refbook_item.TrainModeRefbook[INTERMEDIATE],{ts.Name="промежуточный",ts.Description="Промежуточный режим между пик и непик"}},
+    {sk.refbook.class.refbook_item.TrainModeRefbook[NOTPEAK],{ts.Name="не пик",ts.Description="Режим для часов не пик"}},
+    {sk.refbook.class.refbook_item.TrainModeRefbook[PEAK],{ts.Name="пик",ts.Description="Режим для часов пик"}},
+    {sk.refbook.class.refbook_item.TrainModeRefbook[TRANSITE],{ts.Name="транзит",ts.Description="Режим хода с нулевым временем остановок"}}
+  ],
+  sk.refbook.class.refbook_item.TrainSideRefbook = [
+    {sk.refbook.class.refbook_item.TrainSideRefbook[BOTH],{ts.Name="Обе",ts.Description="Место осмора поезда с обеих сторон"}},
+    {sk.refbook.class.refbook_item.TrainSideRefbook[LEFT],{ts.Name="левая",ts.Description="Канава для осмотра поезда с левой стороны"}},
+    {sk.refbook.class.refbook_item.TrainSideRefbook[RIGHT],{ts.Name="правая",ts.Description="Канава для осмотра поезда с правой стороны"}}
+  ],
+  sk.refbook.class.refbook_item.TrainTypeRefbook = [
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_717_714_8],{ts.Name="81-717/714_8",ts.Description="81-717/714_8",qtty=8}},
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_720_721_8],{ts.Name="81-720/721_8",ts.Description="81-720/721_8",qtty=8}},
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_740_741_8],{ts.Name="81-740/741_8",ts.Description="81-740/741_8",qtty=8}},
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_760_761_8],{ts.Name="81-760/761_8",ts.Description="81-760/761_8",qtty=8}},
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_rubberWeel_8],{ts.Name="колесные пары с подрезиненными колесами_8",ts.Description="колесные пары с подрезиненными колесами_8",qtty=8}},
+    {sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_solidWeel_8],{ts.Name="колесные пары с цельнокатаными колесами_8",ts.Description="колесные пары с цельнокатаными колесами_8",qtty=8}}
+  ],
+  sk.refbook.class.refbook_item.TurnoverTypesRefbook = [
+    {sk.refbook.class.refbook_item.TurnoverTypesRefbook[ROTATIONLONG],{ts.Name="Чередующийся с маневр. бригадой",ts.Description="Чередующийся оборот с маневровой бригадой"}},
+    {sk.refbook.class.refbook_item.TurnoverTypesRefbook[ROTATIONSHORT],{ts.Name="Чередующийся без маневр. бригады",ts.Description="Чередующийся оборот без маневровой бригады"}},
+    {sk.refbook.class.refbook_item.TurnoverTypesRefbook[SIMPLELONG],{ts.Name="Простой с маневр. бригадой",ts.Description="Простой оборот с маневровой бригадой"}},
+    {sk.refbook.class.refbook_item.TurnoverTypesRefbook[SIMPLESHORT],{ts.Name="Простой без маневр. бригады",ts.Description="Простой оборот без маневровой бригады"}},
+    {sk.refbook.class.refbook_item.TurnoverTypesRefbook[SPEC],{ts.Name="Специальный",ts.Description="Специальный оборот. Например с ТО или для смены последовательности маршрутов."}}
+  ],
+  sk.refbook.class.refbook_item.WagonServiceRefbook = [
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_eo_wagonType_81_760_761],{ts.Name="81-760/761 ЭО",ts.Description="ЭО, вагон 81-760/761",onLine=false,hours=24,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_717_714],{ts.Name="81-717/714 КМ",ts.Description="КМ, вагон 81-717/714",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_720_721],{ts.Name="81-720/721 КМ",ts.Description="КМ, вагон 81-720/721",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_740_741],{ts.Name="81-740/741 КМ",ts.Description="КМ, вагон 81-740/741",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_760_761],{ts.Name="81-760/761 КМ",ts.Description="КМ, вагон 81-760/761",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_rubberWeel],{ts.Name="колесные пары с подрезиненными колесами КМ",ts.Description="КМ, вагон колесные пары с подрезиненными колесами",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_solidWeel],{ts.Name="колесные пары с цельнокатаными колесами КМ",ts.Description="КМ, вагон колесные пары с цельнокатаными колесами",onLine=false}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to0_wagonType_81_740_741],{ts.Name="81-740/741 ТО-0",ts.Description="ТО-0, вагон 81-740/741",onLine=true,hours=24,time=10}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_717_714],{ts.Name="81-717/714 ТО-1",ts.Description="ТО-1, вагон 81-717/714",onLine=true,hours=24,time=7}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_720_721],{ts.Name="81-720/721 ТО-1",ts.Description="ТО-1, вагон 81-720/721",onLine=true,hours=24,time=10}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_740_741],{ts.Name="81-740/741 ТО-1",ts.Description="ТО-1, вагон 81-740/741",onLine=false,hours=48,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_rubberWeel],{ts.Name="колесные пары с подрезиненными колесами ТО-1",ts.Description="ТО-1, вагон колесные пары с подрезиненными колесами",onLine=true,hours=24,time=7}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_solidWeel],{ts.Name="колесные пары с цельнокатаными колесами ТО-1",ts.Description="ТО-1, вагон колесные пары с цельнокатаными колесами",onLine=true,hours=24,time=7}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_720_721],{ts.Name="81-720/721 ТО-2",ts.Description="ТО-2, вагон 81-720/721",onLine=false,mileage=10000,tolerance=2000,time=30}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_740_741],{ts.Name="81-740/741 ТО-2",ts.Description="ТО-2, вагон 81-740/741",onLine=false,mileage=10000,tolerance=2000,time=72}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_rubberWeel],{ts.Name="колесные пары с подрезиненными колесами ТО-2",ts.Description="ТО-2, вагон колесные пары с подрезиненными колесами",onLine=false,mileage=3750,tolerance=1000,time=30}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_solidWeel],{ts.Name="колесные пары с цельнокатаными колесами ТО-2",ts.Description="ТО-2, вагон колесные пары с цельнокатаными колесами",onLine=false,mileage=3750,tolerance=1000,time=30}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_717_714],{ts.Name="81-717/714 ТО-3",ts.Description="ТО-3, вагон 81-717/714",onLine=false,mileage=7500,tolerance=2000,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_720_721],{ts.Name="81-720/721 ТО-3",ts.Description="ТО-3, вагон 81-720/721",onLine=false,mileage=33000,tolerance=5000,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_740_741],{ts.Name="81-740/741 ТО-3",ts.Description="ТО-3, вагон 81-740/741",onLine=false,mileage=30000,tolerance=5000,time=240}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_rubberWeel],{ts.Name="колесные пары с подрезиненными колесами ТО-3",ts.Description="ТО-3, вагон колесные пары с подрезиненными колесами",onLine=false,mileage=7500,tolerance=2000,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_solidWeel],{ts.Name="колесные пары с цельнокатаными колесами ТО-3",ts.Description="ТО-3, вагон колесные пары с цельнокатаными колесами",onLine=false,mileage=7500,tolerance=2000,time=40}},
+    {sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to_wagonType_81_760_761],{ts.Name="81-760/761 ТО",ts.Description="ТО, вагон 81-760/761",onLine=false,mileage=35000,tolerance=5000,time=60}}
+  ],
+  sk.refbook.class.refbook_item.WagonTypeRefbook = [
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714],{ts.Name="81-717/714",ts.Description="81-717/714",seatHead=40,seatMedium=44,capacityHead=308,capacityMedium=330}},
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721],{ts.Name="81-720/721",ts.Description="81-720/721"}},
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741],{ts.Name="81-740/741",ts.Description="81-740/741"}},
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761],{ts.Name="81-760/761",ts.Description="81-760/761"}},
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel],{ts.Name="колесные пары с подрезиненными колесами",ts.Description="колесные пары с подрезиненными колесами"}},
+    {sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel],{ts.Name="колесные пары с цельнокатаными колесами",ts.Description="колесные пары с цельнокатаными колесами"}}
+  ],
+  sk.regref.Section = [
+    {sk.regref.Section[metro.RRI.FGDP],{ts.Name="НСИ для ФГДП",ts.Description="Нормативно-справочная информация для ФГДП"}}
+  ],
+  metro.Line = [
+    {metro.Line[line_NKL],{ts.Name="Некрасовская",ts.Description="Некрасовская линия",number="13"}}
+  ],
+  sk.regref.comp.metro.RRI.FGDP.metro.Line = [
+    {sk.regref.comp.metro.RRI.FGDP.metro.Line[line_NKL],{}}
+  ],
+  metro.S5DocumentGDP = [
+    {metro.S5DocumentGDP[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],{ts.Name="Некрасовка-Нижегородская",ts.Description="Импортирован из 13-0000 Некрасовка-Нижегородская",gdpStatus=@EGdpStatus{developing},noChat=false,from=1970-01-01_03:00:00.000,to=1970-01-01_03:00:00.000,summer=false,weekend=false,special=false,doc="",hidden=false,createdTime=2022-05-06_11:34:47.305,editedTime=2022-05-06_11:34:49.931,startTimeDepot=0,startTimeParking=0,endTimeSubway=0,endTime4Passengers=0,description="Некрасовка-Нижегородская"}}
+  ],
+  metro.PlannedTrafficSchedule = [
+    {metro.PlannedTrafficSchedule[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],{}}
+  ],
+  sk.GuiGwPrefs.Section = [
+    {sk.GuiGwPrefs.Section[FgdpSection],{ts.Name="Настройки ГДП",ts.Description="Секция всех настроек ГДП",SectionDefParams=@OptionSet{{ts.Name="Настройки ГДП",ts.Description="Секция всех настроек ГДП"}}}}
+  ],
+  fgdp.BlankConfiguration = [
+    {fgdp.BlankConfiguration[tedBlankConfigObj],{ts.Name="tedBlankConfigObj",ts.Description="Конфигурационная информация бланка ГДП",idsList="",startTime=19800,endTime=106200,pixPerSecond=0.25,useFirstPath=true}}
+  ],
+  fgdp.TedConfiguration = [
+    {fgdp.TedConfiguration[tedBlankConfigObj],{ts.Name="GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0config",ts.Description="Конфигурационная информация редактора",autoUpdateFirstTrains=false,todDecoratorsMemento=""}}
+  ],
+  fgdp.MementoHolder = [
+    {fgdp.MementoHolder[titleArea],{ts.Name="",ts.Description="Заголовок графика",memento="{}"}}
+  ],
+  sitrol.Chat = [
+    {sitrol.Chat[chat_single_instance],{ts.Name="chat_single_instance"}}
+  ],
+  sk.onews.Profile = [
+    {sk.onews.Profile[internal.DenyAll],{ts.Name="Запрет всего",ts.Description="Профиль АРМ, в котором всё запрещено",isBuiltin=true,rules=@S5OneWsProfileRules{rules = [
+      {"Запрет всех компонент",{true,false,{ts.filter.ALL,{}}},deny}
+    ]
+    }}},
+    {sk.onews.Profile[internal.AllowAll],{ts.Name="Разрешено всё",ts.Description="Профиль АРМ, в котором разрешено всё",isBuiltin=true,rules=@S5OneWsProfileRules{rules = [
+      {"Разрешение всех компонент",{true,false,{ts.filter.ALL,{}}},allow}
+    ]
+    }}}
+  ],
+  sk.Session = [
+    {sk.Session[sk_9d6c6ae2_4f71_4cce_8c84_3a4e1e269d21],{StartTime=2022-05-06_11:47:50.109,BackendSpecificParams=@OptionSet{{}},ConnectionCreationParams=@OptionSet{{}}}}
+  ]
+]
+Links = [
+  metro.PassengerStation = [
+    platforms = [
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_nks],[metro.MainStationPath[mainStationPath_1_nks],metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_lhm],[metro.MainStationPath[mainStationPath_1_lhm],metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_udm],[metro.MainStationPath[mainStationPath_1_udm],metro.MainStationPath[mainStationPath_2_udm]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_ksn],[metro.MainStationPath[mainStationPath_1_ksn],metro.MainStationPath[mainStationPath_2_ksn]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_uyv],[metro.MainStationPath[mainStationPath_1_uyv],metro.MainStationPath[mainStationPath_2_uyv]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_oks],[metro.MainStationPath[mainStationPath_1_oks],metro.MainStationPath[mainStationPath_2_oks]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_sth],[metro.MainStationPath[mainStationPath_1_sth],metro.MainStationPath[mainStationPath_2_sth]]},
+      {metro.PassengerStation,platforms,metro.PassengerStation[passStation_njg],[metro.MainStationPath[mainStationPath_1_njg],metro.MainStationPath[mainStationPath_2_njg]]}
+    ],
+    paths = [
+      {metro.PassengerStation,paths,metro.PassengerStation[passStation_nks],[metro.StationPath[stationPath_1_nks],metro.StationPath[stationPath_2_nks],metro.StationPath[stationPath_3_nks],metro.StationPath[stationPath_4_nks]]},
+      {metro.PassengerStation,paths,metro.PassengerStation[passStation_lhm],[metro.StationPath[stationPath_3_lhm],metro.StationPath[stationPath_4_lhm]]},
+      {metro.PassengerStation,paths,metro.PassengerStation[passStation_njg],[metro.StationPath[stationPath_3_njg]]}
+    ],
+    routes = [
+      {metro.PassengerStation,routes,metro.PassengerStation[passStation_nks],[metro.StationRoute[stationRoute_nks_1msp_1sp],metro.StationRoute[stationRoute_nks_1sp_1msp],metro.StationRoute[stationRoute_nks_2msp_2sp],metro.StationRoute[stationRoute_nks_2sp_2msp],metro.StationRoute[stationRoute_nks_1msp_3sp],metro.StationRoute[stationRoute_nks_3sp_1msp],metro.StationRoute[stationRoute_nks_2msp_3sp],metro.StationRoute[stationRoute_nks_3sp_2msp],metro.StationRoute[stationRoute_nks_1msp_4sp],metro.StationRoute[stationRoute_nks_4sp_1msp],metro.StationRoute[stationRoute_nks_2msp_4sp],metro.StationRoute[stationRoute_nks_4sp_2msp]]},
+      {metro.PassengerStation,routes,metro.PassengerStation[passStation_lhm],[metro.StationRoute[stationRoute_lhm_1msp_3sp],metro.StationRoute[stationRoute_lhm_1msp_3sp],metro.StationRoute[stationRoute_lhm_3sp_1msp],metro.StationRoute[stationRoute_lhm_2msp_3sp],metro.StationRoute[stationRoute_lhm_3sp_2msp],metro.StationRoute[stationRoute_lhm_1msp_4sp],metro.StationRoute[stationRoute_lhm_4sp_1msp],metro.StationRoute[stationRoute_lhm_2msp_4sp],metro.StationRoute[stationRoute_lhm_4sp_2msp]]},
+      {metro.PassengerStation,routes,metro.PassengerStation[passStation_njg],[metro.StationRoute[stationRoute_njg_1msp_3sp],metro.StationRoute[stationRoute_njg_1msp_3sp],metro.StationRoute[stationRoute_njg_3sp_1msp],metro.StationRoute[stationRoute_njg_2msp_3sp],metro.StationRoute[stationRoute_njg_3sp_2msp]]}
+    ],
+    rri = [
+    ]
+  ],
+  metro.StationRoute = [
+    from = [
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_1msp_1sp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_1sp_1msp],[metro.StationPath[stationPath_1_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_2msp_2sp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_2sp_2msp],[metro.StationPath[stationPath_2_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_1msp_3sp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_3sp_1msp],[metro.StationPath[stationPath_3_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_2msp_3sp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_3sp_2msp],[metro.StationPath[stationPath_3_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_1msp_4sp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_4sp_1msp],[metro.StationPath[stationPath_4_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_2msp_4sp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_nks_4sp_2msp],[metro.StationPath[stationPath_4_nks]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_1msp_3sp],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_3sp_1msp],[metro.StationPath[stationPath_3_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_2msp_3sp],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_3sp_2msp],[metro.StationPath[stationPath_3_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_1msp_4sp],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_4sp_1msp],[metro.StationPath[stationPath_4_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_2msp_4sp],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_lhm_4sp_2msp],[metro.StationPath[stationPath_4_lhm]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_njg_1msp_3sp],[metro.MainStationPath[mainStationPath_1_njg]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_njg_3sp_1msp],[metro.StationPath[stationPath_3_njg]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_njg_2msp_3sp],[metro.MainStationPath[mainStationPath_2_njg]]},
+      {metro.StationRoute,from,metro.StationRoute[stationRoute_njg_3sp_2msp],[metro.StationPath[stationPath_3_njg]]}
+    ],
+    to = [
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_1msp_1sp],[metro.StationPath[stationPath_1_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_1sp_1msp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_2msp_2sp],[metro.StationPath[stationPath_2_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_2sp_2msp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_1msp_3sp],[metro.StationPath[stationPath_3_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_3sp_1msp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_2msp_3sp],[metro.StationPath[stationPath_3_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_3sp_2msp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_1msp_4sp],[metro.StationPath[stationPath_4_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_4sp_1msp],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_2msp_4sp],[metro.StationPath[stationPath_4_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_nks_4sp_2msp],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_1msp_3sp],[metro.StationPath[stationPath_3_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_3sp_1msp],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_2msp_3sp],[metro.StationPath[stationPath_3_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_3sp_2msp],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_1msp_4sp],[metro.StationPath[stationPath_4_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_4sp_1msp],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_2msp_4sp],[metro.StationPath[stationPath_4_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_lhm_4sp_2msp],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_njg_1msp_3sp],[metro.StationPath[stationPath_3_njg]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_njg_3sp_1msp],[metro.MainStationPath[mainStationPath_1_njg]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_njg_2msp_3sp],[metro.StationPath[stationPath_3_njg]]},
+      {metro.StationRoute,to,metro.StationRoute[stationRoute_njg_3sp_2msp],[metro.MainStationPath[mainStationPath_2_njg]]}
+    ]
+  ],
+  metro.RailwayStage = [
+    from = [
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_nks_lhm],[metro.MainStationPath[mainStationPath_1_nks]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_lhm_nks],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_lhm_udm],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_udm_lhm],[metro.MainStationPath[mainStationPath_2_udm]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_udm_ksn],[metro.MainStationPath[mainStationPath_1_udm]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_ksn_udm],[metro.MainStationPath[mainStationPath_2_ksn]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_ksn_uyv],[metro.MainStationPath[mainStationPath_1_ksn]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_uyv_ksn],[metro.MainStationPath[mainStationPath_2_uyv]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_uyv_oks],[metro.MainStationPath[mainStationPath_1_uyv]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_oks_uyv],[metro.MainStationPath[mainStationPath_2_oks]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_oks_sth],[metro.MainStationPath[mainStationPath_1_oks]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_sth_oks],[metro.MainStationPath[mainStationPath_2_sth]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_1_sth_njg],[metro.MainStationPath[mainStationPath_1_sth]]},
+      {metro.RailwayStage,from,metro.RailwayStage[railwayStage_2_njg_sth],[metro.MainStationPath[mainStationPath_2_njg]]}
+    ],
+    to = [
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_nks_lhm],[metro.MainStationPath[mainStationPath_1_lhm]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_lhm_nks],[metro.MainStationPath[mainStationPath_2_nks]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_lhm_udm],[metro.MainStationPath[mainStationPath_1_udm]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_udm_lhm],[metro.MainStationPath[mainStationPath_2_lhm]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_udm_ksn],[metro.MainStationPath[mainStationPath_1_ksn]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_ksn_udm],[metro.MainStationPath[mainStationPath_2_udm]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_ksn_uyv],[metro.MainStationPath[mainStationPath_1_uyv]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_uyv_ksn],[metro.MainStationPath[mainStationPath_2_ksn]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_uyv_oks],[metro.MainStationPath[mainStationPath_1_oks]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_oks_uyv],[metro.MainStationPath[mainStationPath_2_uyv]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_oks_sth],[metro.MainStationPath[mainStationPath_1_sth]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_sth_oks],[metro.MainStationPath[mainStationPath_2_oks]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_1_sth_njg],[metro.MainStationPath[mainStationPath_1_njg]]},
+      {metro.RailwayStage,to,metro.RailwayStage[railwayStage_2_njg_sth],[metro.MainStationPath[mainStationPath_2_sth]]}
+    ]
+  ],
+  sk.refbook.class.refbook_item.DensityRefbook = [
+    interval = [
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density240_0],[sk.refbook.class.refbook_item.IntervalRefbook[interval240_0]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_1],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_1]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_10],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_10]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_11],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_11]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_12],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_12]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_13],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_13]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_14],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_14]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_15],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_15]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_16],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_16]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_17],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_17]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_18],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_18]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_19],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_19]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_2],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_2]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_20],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_20]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_21],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_21]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_22],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_22]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_23],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_23]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_24],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_24]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_3],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_3]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_4],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_4]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_5],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_5]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_6],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_6]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_7],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_7]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_8],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_8]]},
+      {sk.refbook.class.refbook_item.DensityRefbook,interval,sk.refbook.class.refbook_item.DensityRefbook[density60_9],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_9]]}
+    ]
+  ],
+  sk.refbook.class.refbook_item.MaxIntervalRefbook = [
+    interval = [
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval240_0],[sk.refbook.class.refbook_item.IntervalRefbook[interval240_0]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_1],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_1]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_10],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_10]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_11],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_11]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_12],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_12]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_13],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_13]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_14],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_14]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_15],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_15]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_16],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_16]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_17],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_17]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_18],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_18]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_19],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_19]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_2],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_2]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_20],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_20]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_21],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_21]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_22],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_22]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_23],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_23]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_24],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_24]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_3],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_3]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_4],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_4]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_5],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_5]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_6],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_6]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_7],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_7]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_8],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_8]]},
+      {sk.refbook.class.refbook_item.MaxIntervalRefbook,interval,sk.refbook.class.refbook_item.MaxIntervalRefbook[maxInterval60_9],[sk.refbook.class.refbook_item.IntervalRefbook[interval60_9]]}
+    ]
+  ],
+  sk.refbook.class.refbook_item.TrainTypeRefbook = [
+    wagon = [
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_717_714_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714]]},
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_720_721_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_740_741_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_81_760_761_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761]]},
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_rubberWeel_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.TrainTypeRefbook,wagon,sk.refbook.class.refbook_item.TrainTypeRefbook[trainType_solidWeel_8],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel]]}
+    ]
+  ],
+  sk.refbook.class.refbook_item.WagonServiceRefbook = [
+    service = [
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_eo_wagonType_81_760_761],[sk.refbook.class.refbook_item.TOTypesRefbook[eo]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_717_714],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_720_721],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_740_741],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_760_761],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_rubberWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_solidWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[km]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to0_wagonType_81_740_741],[sk.refbook.class.refbook_item.TOTypesRefbook[to0]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_717_714],[sk.refbook.class.refbook_item.TOTypesRefbook[to1]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_720_721],[sk.refbook.class.refbook_item.TOTypesRefbook[to1]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_740_741],[sk.refbook.class.refbook_item.TOTypesRefbook[to1]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_rubberWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to1]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_solidWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to1]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_720_721],[sk.refbook.class.refbook_item.TOTypesRefbook[to2]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_740_741],[sk.refbook.class.refbook_item.TOTypesRefbook[to2]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_rubberWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to2]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_solidWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to2]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_717_714],[sk.refbook.class.refbook_item.TOTypesRefbook[to3]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_720_721],[sk.refbook.class.refbook_item.TOTypesRefbook[to3]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_740_741],[sk.refbook.class.refbook_item.TOTypesRefbook[to3]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_rubberWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to3]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_solidWeel],[sk.refbook.class.refbook_item.TOTypesRefbook[to3]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,service,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to_wagonType_81_760_761],[sk.refbook.class.refbook_item.TOTypesRefbook[to]]}
+    ],
+    wagon = [
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_eo_wagonType_81_760_761],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_717_714],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_720_721],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_760_761],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_rubberWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_solidWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to0_wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_717_714],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_720_721],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_rubberWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_solidWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_720_721],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_rubberWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_solidWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_717_714],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_720_721],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_rubberWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_solidWeel],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel]]},
+      {sk.refbook.class.refbook_item.WagonServiceRefbook,wagon,sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to_wagonType_81_760_761],[sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761]]}
+    ]
+  ],
+  sk.refbook.class.refbook_item.WagonTypeRefbook = [
+    services = [
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_717_714],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_717_714],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_717_714],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_717_714]]},
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_720_721],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_720_721],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_720_721],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_720_721],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_720_721]]},
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_740_741],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to0_wagonType_81_740_741],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_81_740_741],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_81_740_741],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_81_740_741],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_740_741]]},
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_81_760_761],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_eo_wagonType_81_760_761],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to_wagonType_81_760_761],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_81_760_761]]},
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_rubberWeel],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_rubberWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_rubberWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_rubberWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_rubberWeel]]},
+      {sk.refbook.class.refbook_item.WagonTypeRefbook,services,sk.refbook.class.refbook_item.WagonTypeRefbook[wagonType_solidWeel],[sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to1_wagonType_solidWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to2_wagonType_solidWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_to3_wagonType_solidWeel],sk.refbook.class.refbook_item.WagonServiceRefbook[serviceType_km_wagonType_solidWeel]]}
+    ]
+  ],
+  metro.S5DocumentGDP = [
+    lines = [
+      {metro.S5DocumentGDP,lines,metro.S5DocumentGDP[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],[metro.Line[line_NKL]]}
+    ],
+    author = [
+      {metro.S5DocumentGDP,author,metro.S5DocumentGDP[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],[sk.User[root]]}
+    ],
+    currEditor = [
+      {metro.S5DocumentGDP,currEditor,metro.S5DocumentGDP[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],[sk.User[root]]}
+    ]
+  ],
+  metro.PlannedTrafficSchedule = [
+    lines = [
+      {metro.PlannedTrafficSchedule,lines,metro.PlannedTrafficSchedule[GDP__e7c090bd_2de7_4747_b764_a07f3bd108f0],[metro.Line[line_NKL]]}
+    ]
+  ],
+  sk.Session = [
+    User = [
+      {sk.Session,User,sk.Session[sk_9d6c6ae2_4f71_4cce_8c84_3a4e1e269d21],[sk.User[root]]}
+    ]
+  ]
+]
+LOBs=[]
