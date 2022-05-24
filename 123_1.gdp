@@ -1339,10 +1339,10 @@ ClassInfos = [
 ]
 Objects = [
   metro.LineRegion = [
-    {metro.LineRegion[region_NKL_nks_njg],{ts.Name="Некрасовска-Нижегородская",ts.Description="Участок Некрасовска-Нижегородская",circle=false}}
+    {metro.LineRegion[region_NKL_nks_njg],{ts.Name="Некрасовская-Нижегородская",ts.Description="Участок Некрасовская-Нижегородская",circle=false}}
   ],
   metro.PassengerStation = [
-    {metro.PassengerStation[passStation_nks],{ts.Name="Некрасовска",ts.Description="Станция Некрасовска",number=1,ramified=true}},
+    {metro.PassengerStation[passStation_nks],{ts.Name="Некрасовская",ts.Description="Станция Некрасовская",number=1,ramified=true}},
     {metro.PassengerStation[passStation_lhm],{ts.Name="Лухмановская",ts.Description="Станция Лухмановская",number=2,ramified=true}},
     {metro.PassengerStation[passStation_udm],{ts.Name="Улица Дмитриевского",ts.Description="Станция Улица Дмитриевского",number=3,ramified=true}},
     {metro.PassengerStation[passStation_ksn],{ts.Name="Косино",ts.Description="Станция Косино",number=4,ramified=true}},
@@ -1352,8 +1352,8 @@ Objects = [
     {metro.PassengerStation[passStation_njg],{ts.Name="Нижегородская",ts.Description="Станция Нижегородская",number=8,ramified=true}}
   ],
   metro.MainStationPath = [
-    {metro.MainStationPath[mainStationPath_1_nks],{ts.Name="1 Гл.ст.путь Некрасовска",ts.Description="1 Гл.ст.путь Некрасовска",pathNum=1}},
-    {metro.MainStationPath[mainStationPath_2_nks],{ts.Name="2 Гл.ст.путь Некрасовска",ts.Description="2 Гл.ст.путь Некрасовска",pathNum=2}},
+    {metro.MainStationPath[mainStationPath_1_nks],{ts.Name="1 Гл.ст.путь Некрасовская",ts.Description="1 Гл.ст.путь Некрасовская",pathNum=1}},
+    {metro.MainStationPath[mainStationPath_2_nks],{ts.Name="2 Гл.ст.путь Некрасовская",ts.Description="2 Гл.ст.путь Некрасовская",pathNum=2}},
     {metro.MainStationPath[mainStationPath_1_lhm],{ts.Name="1 Гл.ст.путь Лухмановская",ts.Description="1 Гл.ст.путь Лухмановская",pathNum=1}},
     {metro.MainStationPath[mainStationPath_2_lhm],{ts.Name="2 Гл.ст.путь Лухмановская",ts.Description="2 Гл.ст.путь Лухмановская",pathNum=2}},
     {metro.MainStationPath[mainStationPath_1_udm],{ts.Name="1 Гл.ст.путь Улица Дмитриевского",ts.Description="1 Гл.ст.путь Улица Дмитриевского",pathNum=1}},
@@ -1370,27 +1370,27 @@ Objects = [
     {metro.MainStationPath[mainStationPath_2_njg],{ts.Name="2 Гл.ст.путь Нижегородская",ts.Description="2 Гл.ст.путь Нижегородская",pathNum=2}}
   ],
   metro.StationPath = [
-    {metro.StationPath[stationPath_1_nks],{ts.Name="1 ст.путь Некрасовска",ts.Description="1 ст.путь Некрасовска",pathNum=1}},
-    {metro.StationPath[stationPath_2_nks],{ts.Name="2 ст.путь Некрасовска",ts.Description="2 ст.путь Некрасовска",pathNum=2}},
-    {metro.StationPath[stationPath_3_nks],{ts.Name="3 ст.путь Некрасовска",ts.Description="3 ст.путь Некрасовска",pathNum=3}},
-    {metro.StationPath[stationPath_4_nks],{ts.Name="4 ст.путь Некрасовска",ts.Description="4 ст.путь Некрасовска",pathNum=4}},
+    {metro.StationPath[stationPath_1_nks],{ts.Name="1 ст.путь Некрасовская",ts.Description="1 ст.путь Некрасовская",pathNum=1}},
+    {metro.StationPath[stationPath_2_nks],{ts.Name="2 ст.путь Некрасовская",ts.Description="2 ст.путь Некрасовская",pathNum=2}},
+    {metro.StationPath[stationPath_3_nks],{ts.Name="3 ст.путь Некрасовская",ts.Description="3 ст.путь Некрасовская",pathNum=3}},
+    {metro.StationPath[stationPath_4_nks],{ts.Name="4 ст.путь Некрасовская",ts.Description="4 ст.путь Некрасовская",pathNum=4}},
     {metro.StationPath[stationPath_3_lhm],{ts.Name="3 ст.путь Лухмановская",ts.Description="3 ст.путь Лухмановская",pathNum=3}},
     {metro.StationPath[stationPath_4_lhm],{ts.Name="4 ст.путь Лухмановская",ts.Description="4 ст.путь Лухмановская",pathNum=4}},
     {metro.StationPath[stationPath_3_njg],{ts.Name="3 ст.путь Нижегородская",ts.Description="3 ст.путь Нижегородская",pathNum=3}}
   ],
   metro.StationRoute = [
-    {metro.StationRoute[stationRoute_nks_1msp_1sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 1 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_1sp_1msp],{ts.Name="Некрасовска 1 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_2msp_2sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 2 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_2sp_2msp],{ts.Name="Некрасовска 2 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_1msp_3sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_3sp_1msp],{ts.Name="Некрасовска 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_2msp_3sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_3sp_2msp],{ts.Name="Некрасовска 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_1msp_4sp],{ts.Name="Некрасовска 1 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_4sp_1msp],{ts.Name="Некрасовска 4 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_2msp_4sp],{ts.Name="Некрасовска 2 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
-    {metro.StationRoute[stationRoute_nks_4sp_2msp],{ts.Name="Некрасовска 4 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1msp_1sp],{ts.Name="Некрасовская 1 Гл.ст.путь - 1 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1sp_1msp],{ts.Name="Некрасовская 1 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_2sp],{ts.Name="Некрасовская 2 Гл.ст.путь - 2 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2sp_2msp],{ts.Name="Некрасовская 2 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1msp_3sp],{ts.Name="Некрасовская 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_3sp_1msp],{ts.Name="Некрасовская 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_3sp],{ts.Name="Некрасовская 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_3sp_2msp],{ts.Name="Некрасовская 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_1msp_4sp],{ts.Name="Некрасовская 1 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_4sp_1msp],{ts.Name="Некрасовская 4 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_2msp_4sp],{ts.Name="Некрасовская 2 Гл.ст.путь - 4 ст.путь",ts.Description=" "}},
+    {metro.StationRoute[stationRoute_nks_4sp_2msp],{ts.Name="Некрасовская 4 ст.путь - 2 Гл.ст.путь",ts.Description=" "}},
     {metro.StationRoute[stationRoute_lhm_1msp_3sp],{ts.Name="Лухмановская 1 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
     {metro.StationRoute[stationRoute_lhm_3sp_1msp],{ts.Name="Лухмановская 3 ст.путь - 1 Гл.ст.путь",ts.Description=" "}},
     {metro.StationRoute[stationRoute_lhm_2msp_3sp],{ts.Name="Лухмановская 2 Гл.ст.путь - 3 ст.путь",ts.Description=" "}},
@@ -1405,10 +1405,10 @@ Objects = [
     {metro.StationRoute[stationRoute_njg_3sp_2msp],{ts.Name="Нижегородская 3 ст.путь - 2 Гл.ст.путь",ts.Description=" "}}
   ],
   metro.TurnoverPath = [
-    {metro.TurnoverPath[turnoverPath_nks_1msp_3sp_2msp],{ts.Name="оборот Некрасовска I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
-    {metro.TurnoverPath[turnoverPath_nks_2msp_3sp_1msp],{ts.Name="оборот Некрасовска II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}},
-    {metro.TurnoverPath[turnoverPath_nks_1msp_4sp_2msp],{ts.Name="оборот Некрасовска I Гл.ст.п - 4 ст.п - II Гл.ст.п",ts.Description=" "}},
-    {metro.TurnoverPath[turnoverPath_nks_2msp_4sp_1msp],{ts.Name="оборот Некрасовска II Гл.ст.п - 4 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_1msp_3sp_2msp],{ts.Name="оборот Некрасовская I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_2msp_3sp_1msp],{ts.Name="оборот Некрасовская II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_1msp_4sp_2msp],{ts.Name="оборот Некрасовская I Гл.ст.п - 4 ст.п - II Гл.ст.п",ts.Description=" "}},
+    {metro.TurnoverPath[turnoverPath_nks_2msp_4sp_1msp],{ts.Name="оборот Некрасовская II Гл.ст.п - 4 ст.п - I Гл.ст.п",ts.Description=" "}},
     {metro.TurnoverPath[turnoverPath_lhm_1msp_3sp_2msp],{ts.Name="оборот Лухмановская I Гл.ст.п - 3 ст.п - II Гл.ст.п",ts.Description=" "}},
     {metro.TurnoverPath[turnoverPath_lhm_2msp_3sp_1msp],{ts.Name="оборот Лухмановская II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}},
     {metro.TurnoverPath[turnoverPath_lhm_1msp_4sp_2msp],{ts.Name="оборот Лухмановская I Гл.ст.п - 4 ст.п - II Гл.ст.п",ts.Description=" "}},
@@ -1417,8 +1417,8 @@ Objects = [
     {metro.TurnoverPath[turnoverPath_njg_2msp_3sp_1msp],{ts.Name="оборот Нижегородская II Гл.ст.п - 3 ст.п - I Гл.ст.п",ts.Description=" "}}
   ],
   metro.RailwayStage = [
-    {metro.RailwayStage[railwayStage_1_nks_lhm],{ts.Name="Некрасовска - Лухмановская",ts.Description="Некрасовска - Лухмановская",pathNum=1,shortName=""}},
-    {metro.RailwayStage[railwayStage_2_lhm_nks],{ts.Name="Лухмановская - Некрасовска",ts.Description="Лухмановская - Некрасовска",pathNum=2,shortName=""}},
+    {metro.RailwayStage[railwayStage_1_nks_lhm],{ts.Name="Некрасовская - Лухмановская",ts.Description="Некрасовская - Лухмановская",pathNum=1,shortName=""}},
+    {metro.RailwayStage[railwayStage_2_lhm_nks],{ts.Name="Лухмановская - Некрасовская",ts.Description="Лухмановская - Некрасовская",pathNum=2,shortName=""}},
     {metro.RailwayStage[railwayStage_1_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского",ts.Description="Лухмановская - Улица Дмитриевского",pathNum=1,shortName=""}},
     {metro.RailwayStage[railwayStage_2_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская",ts.Description="Улица Дмитриевского - Лухмановская",pathNum=2,shortName=""}},
     {metro.RailwayStage[railwayStage_1_udm_ksn],{ts.Name="Улица Дмитриевского - Косино",ts.Description="Улица Дмитриевского - Косино",pathNum=1,shortName=""}},
@@ -1444,8 +1444,8 @@ Objects = [
     {metro.Pathway[toDepot_lhm_2msp_4sp_depot_rud],{ts.Name="Лухмановская 2 гсп 4 сп - депо Руднево"}}
   ],
   metro.StageModeFirst = [
-    {metro.StageModeFirst[stageModeFirst_nks_lhm],{ts.Name="Некрасовска - Лухмановская 1 поезд"}},
-    {metro.StageModeFirst[stageModeFirst_lhm_nks],{ts.Name="Лухмановская - Некрасовска 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_nks_lhm],{ts.Name="Некрасовская - Лухмановская 1 поезд"}},
+    {metro.StageModeFirst[stageModeFirst_lhm_nks],{ts.Name="Лухмановская - Некрасовская 1 поезд"}},
     {metro.StageModeFirst[stageModeFirst_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского 1 поезд"}},
     {metro.StageModeFirst[stageModeFirst_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская 1 поезд"}},
     {metro.StageModeFirst[stageModeFirst_udm_ksn],{ts.Name="Улица Дмитриевского - Косино 1 поезд"}},
@@ -1460,58 +1460,58 @@ Objects = [
     {metro.StageModeFirst[stageModeFirst_njg_sth],{ts.Name="Нижегородская - Стахановская 1 поезд"}}
   ],
   metro.StageMode = [
-    {metro.StageMode[stageMode_00_nks_lhm],{ts.Name="Некрасовска - Лухмановская резерв"}},
-    {metro.StageMode[stageMode_00_lhm_nks],{ts.Name="Лухмановская - Некрасовска резерв"}},
-    {metro.StageMode[stageMode_01_nks_lhm],{ts.Name="Некрасовска - Лухмановская пик"}},
-    {metro.StageMode[stageMode_01_lhm_nks],{ts.Name="Лухмановская - Некрасовска пик"}},
-    {metro.StageMode[stageMode_02nks_lhm],{ts.Name="Некрасовска - Лухмановская не пик"}},
-    {metro.StageMode[stageMode_02lhm_nks],{ts.Name="Лухмановская - Некрасовска не пик"}},
+    {metro.StageMode[stageMode_00_nks_lhm],{ts.Name="Некрасовская - Лухмановская резерв"}},
+    {metro.StageMode[stageMode_00_lhm_nks],{ts.Name="Лухмановская - Некрасовская резерв"}},
+    {metro.StageMode[stageMode_01_nks_lhm],{ts.Name="Некрасовская - Лухмановская пик"}},
+    {metro.StageMode[stageMode_01_lhm_nks],{ts.Name="Лухмановская - Некрасовская пик"}},
+    {metro.StageMode[stageMode_02_nks_lhm],{ts.Name="Некрасовская - Лухмановская не пик"}},
+    {metro.StageMode[stageMode_02_lhm_nks],{ts.Name="Лухмановская - Некрасовская не пик"}},
     {metro.StageMode[stageMode_00_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского резерв"}},
     {metro.StageMode[stageMode_00_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская резерв"}},
     {metro.StageMode[stageMode_01_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского пик"}},
     {metro.StageMode[stageMode_01_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская пик"}},
-    {metro.StageMode[stageMode_02lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского не пик"}},
-    {metro.StageMode[stageMode_02udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская не пик"}},
+    {metro.StageMode[stageMode_02_lhm_udm],{ts.Name="Лухмановская - Улица Дмитриевского не пик"}},
+    {metro.StageMode[stageMode_02_udm_lhm],{ts.Name="Улица Дмитриевского - Лухмановская не пик"}},
     {metro.StageMode[stageMode_00_udm_ksn],{ts.Name="Улица Дмитриевского - Косино резерв"}},
     {metro.StageMode[stageMode_00_ksn_udm],{ts.Name="Косино - Улица Дмитриевского резерв"}},
     {metro.StageMode[stageMode_01_udm_ksn],{ts.Name="Улица Дмитриевского - Косино пик"}},
     {metro.StageMode[stageMode_01_ksn_udm],{ts.Name="Косино - Улица Дмитриевского пик"}},
-    {metro.StageMode[stageMode_02udm_ksn],{ts.Name="Улица Дмитриевского - Косино не пик"}},
-    {metro.StageMode[stageMode_02ksn_udm],{ts.Name="Косино - Улица Дмитриевского не пик"}},
+    {metro.StageMode[stageMode_02_udm_ksn],{ts.Name="Улица Дмитриевского - Косино не пик"}},
+    {metro.StageMode[stageMode_02_ksn_udm],{ts.Name="Косино - Улица Дмитриевского не пик"}},
     {metro.StageMode[stageMode_00_ksn_uyv],{ts.Name="Косино - Юго-Восточная резерв"}},
     {metro.StageMode[stageMode_00_uyv_ksn],{ts.Name="Юго-Восточная - Косино резерв"}},
     {metro.StageMode[stageMode_01_ksn_uyv],{ts.Name="Косино - Юго-Восточная пик"}},
     {metro.StageMode[stageMode_01_uyv_ksn],{ts.Name="Юго-Восточная - Косино пик"}},
-    {metro.StageMode[stageMode_02ksn_uyv],{ts.Name="Косино - Юго-Восточная не пик"}},
-    {metro.StageMode[stageMode_02uyv_ksn],{ts.Name="Юго-Восточная - Косино не пик"}},
+    {metro.StageMode[stageMode_02_ksn_uyv],{ts.Name="Косино - Юго-Восточная не пик"}},
+    {metro.StageMode[stageMode_02_uyv_ksn],{ts.Name="Юго-Восточная - Косино не пик"}},
     {metro.StageMode[stageMode_00_uyv_oks],{ts.Name="Юго-Восточная - Окская резерв"}},
     {metro.StageMode[stageMode_00_oks_uyv],{ts.Name="Окская - Юго-Восточная резерв"}},
     {metro.StageMode[stageMode_01_uyv_oks],{ts.Name="Юго-Восточная - Окская пик"}},
     {metro.StageMode[stageMode_01_oks_uyv],{ts.Name="Окская - Юго-Восточная пик"}},
-    {metro.StageMode[stageMode_02uyv_oks],{ts.Name="Юго-Восточная - Окская не пик"}},
-    {metro.StageMode[stageMode_02oks_uyv],{ts.Name="Окская - Юго-Восточная не пик"}},
+    {metro.StageMode[stageMode_02_uyv_oks],{ts.Name="Юго-Восточная - Окская не пик"}},
+    {metro.StageMode[stageMode_02_oks_uyv],{ts.Name="Окская - Юго-Восточная не пик"}},
     {metro.StageMode[stageMode_00_oks_sth],{ts.Name="Окская - Стахановская резерв"}},
     {metro.StageMode[stageMode_00_sth_oks],{ts.Name="Стахановская - Окская резерв"}},
     {metro.StageMode[stageMode_01_oks_sth],{ts.Name="Окская - Стахановская пик"}},
     {metro.StageMode[stageMode_01_sth_oks],{ts.Name="Стахановская - Окская пик"}},
-    {metro.StageMode[stageMode_02oks_sth],{ts.Name="Окская - Стахановская не пик"}},
-    {metro.StageMode[stageMode_02sth_oks],{ts.Name="Стахановская - Окская не пик"}},
+    {metro.StageMode[stageMode_02_oks_sth],{ts.Name="Окская - Стахановская не пик"}},
+    {metro.StageMode[stageMode_02_sth_oks],{ts.Name="Стахановская - Окская не пик"}},
     {metro.StageMode[stageMode_00_sth_njg],{ts.Name="Стахановская - Нижегородская резерв"}},
     {metro.StageMode[stageMode_00_njg_sth],{ts.Name="Нижегородская - Стахановская резерв"}},
     {metro.StageMode[stageMode_01_sth_njg],{ts.Name="Стахановская - Нижегородская пик"}},
     {metro.StageMode[stageMode_01_njg_sth],{ts.Name="Нижегородская - Стахановская пик"}},
-    {metro.StageMode[stageMode_02sth_njg],{ts.Name="Стахановская - Нижегородская не пик"}},
-    {metro.StageMode[stageMode_02njg_sth],{ts.Name="Нижегородская - Стахановская не пик"}}
+    {metro.StageMode[stageMode_02_sth_njg],{ts.Name="Стахановская - Нижегородская не пик"}},
+    {metro.StageMode[stageMode_02_njg_sth],{ts.Name="Нижегородская - Стахановская не пик"}}
   ],
   metro.StopMode = [
-    {metro.StopMode[stopMode_First_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска 1 поезд"}},
-    {metro.StopMode[stopMode_First_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска 1 поезд"}},
-    {metro.StopMode[stopMode_00_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска резерв"}},
-    {metro.StopMode[stopMode_00_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска резерв"}},
-    {metro.StopMode[stopMode_01_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска пик"}},
-    {metro.StopMode[stopMode_01_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска пик"}},
-    {metro.StopMode[stopMode_02_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовска не пик"}},
-    {metro.StopMode[stopMode_02_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовска не пик"}},
+    {metro.StopMode[stopMode_First_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовская 1 поезд"}},
+    {metro.StopMode[stopMode_First_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовская 1 поезд"}},
+    {metro.StopMode[stopMode_00_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовская резерв"}},
+    {metro.StopMode[stopMode_00_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовская резерв"}},
+    {metro.StopMode[stopMode_01_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовская пик"}},
+    {metro.StopMode[stopMode_01_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовская пик"}},
+    {metro.StopMode[stopMode_02_nks_1],{ts.Name="1 гл. ст. путь ст. Некрасовская не пик"}},
+    {metro.StopMode[stopMode_02_nks_2],{ts.Name="2 гл. ст. путь ст. Некрасовская не пик"}},
     {metro.StopMode[stopMode_First_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская 1 поезд"}},
     {metro.StopMode[stopMode_First_lhm_2],{ts.Name="2 гл. ст. путь ст. Лухмановская 1 поезд"}},
     {metro.StopMode[stopMode_00_lhm_1],{ts.Name="1 гл. ст. путь ст. Лухмановская резерв"}},
@@ -1569,6 +1569,9 @@ Objects = [
     {metro.StopMode[stopMode_02_njg_1],{ts.Name="1 гл. ст. путь ст. Нижегородская не пик"}},
     {metro.StopMode[stopMode_02_njg_2],{ts.Name="2 гл. ст. путь ст. Нижегородская не пик"}}
   ],
+  metro.LineDrivingModes = [
+    {metro.LineDrivingModes[lineDrivingModes_NKL],{ts.Name="Режимы хода NKL"}}
+  ],
   metro.DrivingMode = [
     {metro.DrivingMode[drivingMode_1_NKL_First],{ts.Name="1NKL первый",additional=false}},
     {metro.DrivingMode[drivingMode_2_NKL_First],{ts.Name="2NKL первый",additional=false}},
@@ -1579,8 +1582,15 @@ Objects = [
     {metro.DrivingMode[drivingMode_1_NKL_02],{ts.Name="1NKL не пик",additional=false}},
     {metro.DrivingMode[drivingMode_2_NKL_02],{ts.Name="2NKL не пик",additional=false}}
   ],
-  metro.LineDrivingModes = [
-    {metro.LineDrivingModes[lineDrivingModes_NKL],{ts.Name="Режимы хода NKL"}}
+  sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode = [
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_1_NKL_First],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_2_NKL_First],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_1_NKL_00],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_2_NKL_00],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_1_NKL_01],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_2_NKL_01],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_1_NKL_02],{}},
+    {sk.regref.comp.metro.RRI.FGDP.metro.DrivingMode[drivingMode_2_NKL_02],{}}
   ],
   sk.System = [
     {sk.System[ThisSystem],{ts.Name="Система",ts.Description="Система"}}
@@ -2073,22 +2083,22 @@ Links = [
     stages = [
       {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_First],[metro.StageModeFirst[stageModeFirst_nks_lhm],metro.StageModeFirst[stageModeFirst_lhm_udm],metro.StageModeFirst[stageModeFirst_udm_ksn],metro.StageModeFirst[stageModeFirst_ksn_uyv],metro.StageModeFirst[stageModeFirst_uyv_oks],metro.StageModeFirst[stageModeFirst_oks_sth],metro.StageModeFirst[stageModeFirst_sth_njg]]},
       {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_First],[metro.StageModeFirst[stageModeFirst_lhm_nks],metro.StageModeFirst[stageModeFirst_udm_lhm],metro.StageModeFirst[stageModeFirst_ksn_udm],metro.StageModeFirst[stageModeFirst_uyv_ksn],metro.StageModeFirst[stageModeFirst_oks_uyv],metro.StageModeFirst[stageModeFirst_sth_oks],metro.StageModeFirst[stageModeFirst_njg_sth]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_00],[metro.StageModeFirst[stageMode_00_nks_lhm],metro.StageModeFirst[stageMode_00_lhm_udm],metro.StageModeFirst[stageMode_00_udm_ksn],metro.StageModeFirst[stageMode_00_ksn_uyv],metro.StageModeFirst[stageMode_00_uyv_oks],metro.StageModeFirst[stageMode_00_oks_sth],metro.StageModeFirst[stageMode_00_sth_njg]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_00],[metro.StageModeFirst[stageMode_00_lhm_nks],metro.StageModeFirst[stageMode_00_udm_lhm],metro.StageModeFirst[stageMode_00_ksn_udm],metro.StageModeFirst[stageMode_00_uyv_ksn],metro.StageModeFirst[stageMode_00_oks_uyv],metro.StageModeFirst[stageMode_00_sth_oks],metro.StageModeFirst[stageMode_00_njg_sth]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_01],[metro.StageModeFirst[stageMode_01_nks_lhm],metro.StageModeFirst[stageMode_01_lhm_udm],metro.StageModeFirst[stageMode_01_udm_ksn],metro.StageModeFirst[stageMode_01_ksn_uyv],metro.StageModeFirst[stageMode_01_uyv_oks],metro.StageModeFirst[stageMode_01_oks_sth],metro.StageModeFirst[stageMode_01_sth_njg]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_01],[metro.StageModeFirst[stageMode_01_lhm_nks],metro.StageModeFirst[stageMode_01_udm_lhm],metro.StageModeFirst[stageMode_01_ksn_udm],metro.StageModeFirst[stageMode_01_uyv_ksn],metro.StageModeFirst[stageMode_01_oks_uyv],metro.StageModeFirst[stageMode_01_sth_oks],metro.StageModeFirst[stageMode_01_njg_sth]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_02],[metro.StageModeFirst[stageMode_02_nks_lhm],metro.StageModeFirst[stageMode_02_lhm_udm],metro.StageModeFirst[stageMode_02_udm_ksn],metro.StageModeFirst[stageMode_02_ksn_uyv],metro.StageModeFirst[stageMode_02_uyv_oks],metro.StageModeFirst[stageMode_02_oks_sth],metro.StageModeFirst[stageMode_02_sth_njg]]},
-      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_02],[metro.StageModeFirst[stageMode_02_lhm_nks],metro.StageModeFirst[stageMode_02_udm_lhm],metro.StageModeFirst[stageMode_02_ksn_udm],metro.StageModeFirst[stageMode_02_uyv_ksn],metro.StageModeFirst[stageMode_02_oks_uyv],metro.StageModeFirst[stageMode_02_sth_oks],metro.StageModeFirst[stageMode_02_njg_sth]]}
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_00],[metro.StageMode[stageMode_00_nks_lhm],metro.StageMode[stageMode_00_lhm_udm],metro.StageMode[stageMode_00_udm_ksn],metro.StageMode[stageMode_00_ksn_uyv],metro.StageMode[stageMode_00_uyv_oks],metro.StageMode[stageMode_00_oks_sth],metro.StageMode[stageMode_00_sth_njg]]},
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_00],[metro.StageMode[stageMode_00_lhm_nks],metro.StageMode[stageMode_00_udm_lhm],metro.StageMode[stageMode_00_ksn_udm],metro.StageMode[stageMode_00_uyv_ksn],metro.StageMode[stageMode_00_oks_uyv],metro.StageMode[stageMode_00_sth_oks],metro.StageMode[stageMode_00_njg_sth]]},
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_01],[metro.StageMode[stageMode_01_nks_lhm],metro.StageMode[stageMode_01_lhm_udm],metro.StageMode[stageMode_01_udm_ksn],metro.StageMode[stageMode_01_ksn_uyv],metro.StageMode[stageMode_01_uyv_oks],metro.StageMode[stageMode_01_oks_sth],metro.StageMode[stageMode_01_sth_njg]]},
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_01],[metro.StageMode[stageMode_01_lhm_nks],metro.StageMode[stageMode_01_udm_lhm],metro.StageMode[stageMode_01_ksn_udm],metro.StageMode[stageMode_01_uyv_ksn],metro.StageMode[stageMode_01_oks_uyv],metro.StageMode[stageMode_01_sth_oks],metro.StageMode[stageMode_01_njg_sth]]},
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_1_NKL_02],[metro.StageMode[stageMode_02_nks_lhm],metro.StageMode[stageMode_02_lhm_udm],metro.StageMode[stageMode_02_udm_ksn],metro.StageMode[stageMode_02_ksn_uyv],metro.StageMode[stageMode_02_uyv_oks],metro.StageMode[stageMode_02_oks_sth],metro.StageMode[stageMode_02_sth_njg]]},
+      {metro.DrivingMode,stages,metro.DrivingMode[drivingMode_2_NKL_02],[metro.StageMode[stageMode_02_lhm_nks],metro.StageMode[stageMode_02_udm_lhm],metro.StageMode[stageMode_02_ksn_udm],metro.StageMode[stageMode_02_uyv_ksn],metro.StageMode[stageMode_02_oks_uyv],metro.StageMode[stageMode_02_sth_oks],metro.StageMode[stageMode_02_njg_sth]]}
     ],
     stops = [
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_First],[metro.StageModeFirst[stageMode_First_nks_1],metro.StageModeFirst[stageMode_First_lhm_1],metro.StageModeFirst[stageMode_First_udm_1],metro.StageModeFirst[stageMode_First_ksn_1],metro.StageModeFirst[stageMode_First_uyv_1],metro.StageModeFirst[stageMode_First_oks_1],metro.StageModeFirst[stageMode_First_sth_1],metro.StageModeFirst[stageMode_First_njg_1]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_First],[metro.StageModeFirst[stageMode_First_nks_2],metro.StageModeFirst[stageMode_First_lhm_2],metro.StageModeFirst[stageMode_First_udm_2],metro.StageModeFirst[stageMode_First_ksn_2],metro.StageModeFirst[stageMode_First_uyv_2],metro.StageModeFirst[stageMode_First_oks_2],metro.StageModeFirst[stageMode_First_sth_2],metro.StageModeFirst[stageMode_First_njg_2]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_00],[metro.StageModeFirst[stageMode_00_nks_1],metro.StageModeFirst[stageMode_00_lhm_1],metro.StageModeFirst[stageMode_00_udm_1],metro.StageModeFirst[stageMode_00_ksn_1],metro.StageModeFirst[stageMode_00_uyv_1],metro.StageModeFirst[stageMode_00_oks_1],metro.StageModeFirst[stageMode_00_sth_1],metro.StageModeFirst[stageMode_00_njg_1]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_00],[metro.StageModeFirst[stageMode_00_nks_2],metro.StageModeFirst[stageMode_00_lhm_2],metro.StageModeFirst[stageMode_00_udm_2],metro.StageModeFirst[stageMode_00_ksn_2],metro.StageModeFirst[stageMode_00_uyv_2],metro.StageModeFirst[stageMode_00_oks_2],metro.StageModeFirst[stageMode_00_sth_2],metro.StageModeFirst[stageMode_00_njg_2]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_01],[metro.StageModeFirst[stageMode_01_nks_1],metro.StageModeFirst[stageMode_01_lhm_1],metro.StageModeFirst[stageMode_01_udm_1],metro.StageModeFirst[stageMode_01_ksn_1],metro.StageModeFirst[stageMode_01_uyv_1],metro.StageModeFirst[stageMode_01_oks_1],metro.StageModeFirst[stageMode_01_sth_1],metro.StageModeFirst[stageMode_01_njg_1]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_01],[metro.StageModeFirst[stageMode_01_nks_2],metro.StageModeFirst[stageMode_01_lhm_2],metro.StageModeFirst[stageMode_01_udm_2],metro.StageModeFirst[stageMode_01_ksn_2],metro.StageModeFirst[stageMode_01_uyv_2],metro.StageModeFirst[stageMode_01_oks_2],metro.StageModeFirst[stageMode_01_sth_2],metro.StageModeFirst[stageMode_01_njg_2]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_02],[metro.StageModeFirst[stageMode_02_nks_1],metro.StageModeFirst[stageMode_02_lhm_1],metro.StageModeFirst[stageMode_02_udm_1],metro.StageModeFirst[stageMode_02_ksn_1],metro.StageModeFirst[stageMode_02_uyv_1],metro.StageModeFirst[stageMode_02_oks_1],metro.StageModeFirst[stageMode_02_sth_1],metro.StageModeFirst[stageMode_02_njg_1]]},
-      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_02],[metro.StageModeFirst[stageMode_02_nks_2],metro.StageModeFirst[stageMode_02_lhm_2],metro.StageModeFirst[stageMode_02_udm_2],metro.StageModeFirst[stageMode_02_ksn_2],metro.StageModeFirst[stageMode_02_uyv_2],metro.StageModeFirst[stageMode_02_oks_2],metro.StageModeFirst[stageMode_02_sth_2],metro.StageModeFirst[stageMode_02_njg_2]]}
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_First],[metro.StopMode[stopMode_First_nks_1],metro.StopMode[stopMode_First_lhm_1],metro.StopMode[stopMode_First_udm_1],metro.StopMode[stopMode_First_ksn_1],metro.StopMode[stopMode_First_uyv_1],metro.StopMode[stopMode_First_oks_1],metro.StopMode[stopMode_First_sth_1],metro.StopMode[stopMode_First_njg_1]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_2_NKL_First],[metro.StopMode[stopMode_First_nks_2],metro.StopMode[stopMode_First_lhm_2],metro.StopMode[stopMode_First_udm_2],metro.StopMode[stopMode_First_ksn_2],metro.StopMode[stopMode_First_uyv_2],metro.StopMode[stopMode_First_oks_2],metro.StopMode[stopMode_First_sth_2],metro.StopMode[stopMode_First_njg_2]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_00],[metro.StopMode[stopMode_00_nks_1],metro.StopMode[stopMode_00_lhm_1],metro.StopMode[stopMode_00_udm_1],metro.StopMode[stopMode_00_ksn_1],metro.StopMode[stopMode_00_uyv_1],metro.StopMode[stopMode_00_oks_1],metro.StopMode[stopMode_00_sth_1],metro.StopMode[stopMode_00_njg_1]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_2_NKL_00],[metro.StopMode[stopMode_00_nks_2],metro.StopMode[stopMode_00_lhm_2],metro.StopMode[stopMode_00_udm_2],metro.StopMode[stopMode_00_ksn_2],metro.StopMode[stopMode_00_uyv_2],metro.StopMode[stopMode_00_oks_2],metro.StopMode[stopMode_00_sth_2],metro.StopMode[stopMode_00_njg_2]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_01],[metro.StopMode[stopMode_01_nks_1],metro.StopMode[stopMode_01_lhm_1],metro.StopMode[stopMode_01_udm_1],metro.StopMode[stopMode_01_ksn_1],metro.StopMode[stopMode_01_uyv_1],metro.StopMode[stopMode_01_oks_1],metro.StopMode[stopMode_01_sth_1],metro.StopMode[stopMode_01_njg_1]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_2_NKL_01],[metro.StopMode[stopMode_01_nks_2],metro.StopMode[stopMode_01_lhm_2],metro.StopMode[stopMode_01_udm_2],metro.StopMode[stopMode_01_ksn_2],metro.StopMode[stopMode_01_uyv_2],metro.StopMode[stopMode_01_oks_2],metro.StopMode[stopMode_01_sth_2],metro.StopMode[stopMode_01_njg_2]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_1_NKL_02],[metro.StopMode[stopMode_02_nks_1],metro.StopMode[stopMode_02_lhm_1],metro.StopMode[stopMode_02_udm_1],metro.StopMode[stopMode_02_ksn_1],metro.StopMode[stopMode_02_uyv_1],metro.StopMode[stopMode_02_oks_1],metro.StopMode[stopMode_02_sth_1],metro.StopMode[stopMode_02_njg_1]]},
+      {metro.DrivingMode,stops,metro.DrivingMode[drivingMode_2_NKL_02],[metro.StopMode[stopMode_02_nks_2],metro.StopMode[stopMode_02_lhm_2],metro.StopMode[stopMode_02_udm_2],metro.StopMode[stopMode_02_ksn_2],metro.StopMode[stopMode_02_uyv_2],metro.StopMode[stopMode_02_oks_2],metro.StopMode[stopMode_02_sth_2],metro.StopMode[stopMode_02_njg_2]]}
     ]
   ],
   metro.LineDrivingModes = [
